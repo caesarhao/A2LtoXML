@@ -1,0 +1,4086 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?ASAP2_VERSION property="1 61"?>
+<PROJECT property="ASAP2_Example &quot;&quot;">
+
+  <HEADER property="&quot;ASAP2 Example File&quot;">
+    VERSION &quot;V1.61&quot;
+    PROJECT_NO MCD_P12_08
+  </HEADER>
+
+  <MODULE property="Example &quot;&quot;">
+
+    <A2ML>
+
+      block &quot;IF_DATA&quot; taggedunion if_data {
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  ASAM XCP AML                                                                                    */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+        &quot;XCP&quot; struct {
+          taggedstruct {
+            block &quot;PROTOCOL_LAYER&quot; struct {
+              uint;
+              uint;
+              uint;
+              uint;
+              uint;
+              uint;
+              uint;
+              uint;
+              uchar;
+              uint;
+              enum {
+                &quot;BYTE_ORDER_MSB_LAST&quot; = 0,
+                &quot;BYTE_ORDER_MSB_FIRST&quot; = 1
+              };
+              enum {
+                &quot;ADDRESS_GRANULARITY_BYTE&quot; = 1,
+                &quot;ADDRESS_GRANULARITY_WORD&quot; = 2,
+                &quot;ADDRESS_GRANULARITY_DWORD&quot; = 4
+              };
+              taggedstruct {
+                (&quot;OPTIONAL_CMD&quot; enum {
+                  &quot;GET_COMM_MODE_INFO&quot; = 251,
+                  &quot;GET_ID&quot; = 250,
+                  &quot;SET_REQUEST&quot; = 249,
+                  &quot;GET_SEED&quot; = 248,
+                  &quot;UNLOCK&quot; = 247,
+                  &quot;SET_MTA&quot; = 246,
+                  &quot;UPLOAD&quot; = 245,
+                  &quot;SHORT_UPLOAD&quot; = 244,
+                  &quot;BUILD_CHECKSUM&quot; = 243,
+                  &quot;TRANSPORT_LAYER_CMD&quot; = 242,
+                  &quot;USER_CMD&quot; = 241,
+                  &quot;DOWNLOAD&quot; = 240,
+                  &quot;DOWNLOAD_NEXT&quot; = 239,
+                  &quot;DOWNLOAD_MAX&quot; = 238,
+                  &quot;SHORT_DOWNLOAD&quot; = 237,
+                  &quot;MODIFY_BITS&quot; = 236,
+                  &quot;SET_CAL_PAGE&quot; = 235,
+                  &quot;GET_CAL_PAGE&quot; = 234,
+                  &quot;GET_PAG_PROCESSOR_INFO&quot; = 233,
+                  &quot;GET_SEGMENT_INFO&quot; = 232,
+                  &quot;GET_PAGE_INFO&quot; = 231,
+                  &quot;SET_SEGMENT_MODE&quot; = 230,
+                  &quot;GET_SEGMENT_MODE&quot; = 229,
+                  &quot;COPY_CAL_PAGE&quot; = 228,
+                  &quot;CLEAR_DAQ_LIST&quot; = 227,
+                  &quot;SET_DAQ_PTR&quot; = 226,
+                  &quot;WRITE_DAQ&quot; = 225,
+                  &quot;SET_DAQ_LIST_MODE&quot; = 224,
+                  &quot;GET_DAQ_LIST_MODE&quot; = 223,
+                  &quot;START_STOP_DAQ_LIST&quot; = 222,
+                  &quot;START_STOP_SYNCH&quot; = 221,
+                  &quot;GET_DAQ_CLOCK&quot; = 220,
+                  &quot;READ_DAQ&quot; = 219,
+                  &quot;GET_DAQ_PROCESSOR_INFO&quot; = 218,
+                  &quot;GET_DAQ_RESOLUTION_INFO&quot; = 217,
+                  &quot;GET_DAQ_LIST_INFO&quot; = 216,
+                  &quot;GET_DAQ_EVENT_INFO&quot; = 215,
+                  &quot;FREE_DAQ&quot; = 214,
+                  &quot;ALLOC_DAQ&quot; = 213,
+                  &quot;ALLOC_ODT&quot; = 212,
+                  &quot;ALLOC_ODT_ENTRY&quot; = 211,
+                  &quot;PROGRAM_START&quot; = 210,
+                  &quot;PROGRAM_CLEAR&quot; = 209,
+                  &quot;PROGRAM&quot; = 208,
+                  &quot;PROGRAM_RESET&quot; = 207,
+                  &quot;GET_PGM_PROCESSOR_INFO&quot; = 206,
+                  &quot;GET_SECTOR_INFO&quot; = 205,
+                  &quot;PROGRAM_PREPARE&quot; = 204,
+                  &quot;PROGRAM_FORMAT&quot; = 203,
+                  &quot;PROGRAM_NEXT&quot; = 202,
+                  &quot;PROGRAM_MAX&quot; = 201,
+                  &quot;PROGRAM_VERIFY&quot; = 200
+                })*;
+                &quot;COMMUNICATION_MODE_SUPPORTED&quot; taggedunion {
+                  &quot;BLOCK&quot; taggedstruct {
+                    &quot;SLAVE&quot; ;
+                    &quot;MASTER&quot; struct {
+                      uchar;
+                      uchar;
+                    };
+                  };
+                  &quot;INTERLEAVED&quot; uchar;
+                };
+                &quot;SEED_AND_KEY_EXTERNAL_FUNCTION&quot; char[256];
+              };
+            };
+            block &quot;SEGMENT&quot; struct {
+              uchar;
+              uchar;
+              uchar;
+              uchar;
+              uchar;
+              taggedstruct {
+                block &quot;CHECKSUM&quot; struct {
+                  enum {
+                    &quot;XCP_ADD_11&quot; = 1,
+                    &quot;XCP_ADD_12&quot; = 2,
+                    &quot;XCP_ADD_14&quot; = 3,
+                    &quot;XCP_ADD_22&quot; = 4,
+                    &quot;XCP_ADD_24&quot; = 5,
+                    &quot;XCP_ADD_44&quot; = 6,
+                    &quot;XCP_CRC_16&quot; = 7,
+                    &quot;XCP_CRC_16_CITT&quot; = 8,
+                    &quot;XCP_CRC_32&quot; = 9,
+                    &quot;XCP_USER_DEFINED&quot; = 255
+                  };
+                  taggedstruct {
+                    &quot;MAX_BLOCK_SIZE&quot; ulong;
+                    &quot;EXTERNAL_FUNCTION&quot; char[256];
+                  };
+                };
+                (block &quot;PAGE&quot; struct {
+                  uchar;
+                  enum {
+                    &quot;ECU_ACCESS_NOT_ALLOWED&quot; = 0,
+                    &quot;ECU_ACCESS_WITHOUT_XCP_ONLY&quot; = 1,
+                    &quot;ECU_ACCESS_WITH_XCP_ONLY&quot; = 2,
+                    &quot;ECU_ACCESS_DONT_CARE&quot; = 3
+                  };
+                  enum {
+                    &quot;XCP_READ_ACCESS_NOT_ALLOWED&quot; = 0,
+                    &quot;XCP_READ_ACCESS_WITHOUT_ECU_ONLY&quot; = 1,
+                    &quot;XCP_READ_ACCESS_WITH_ECU_ONLY&quot; = 2,
+                    &quot;XCP_READ_ACCESS_DONT_CARE&quot; = 3
+                  };
+                  enum {
+                    &quot;XCP_WRITE_ACCESS_NOT_ALLOWED&quot; = 0,
+                    &quot;XCP_WRITE_ACCESS_WITHOUT_ECU_ONLY&quot; = 1,
+                    &quot;XCP_WRITE_ACCESS_WITH_ECU_ONLY&quot; = 2,
+                    &quot;XCP_WRITE_ACCESS_DONT_CARE&quot; = 3
+                  };
+                  taggedstruct {
+                    &quot;INIT_SEGMENT&quot; uchar;
+                  };
+                })*;
+                (block &quot;ADDRESS_MAPPING&quot; struct {
+                  ulong;
+                  ulong;
+                  ulong;
+                })*;
+                &quot;PGM_VERIFY&quot; ulong;
+              };
+            };
+            block &quot;DAQ&quot; struct {
+              enum {
+                &quot;STATIC&quot; = 0,
+                &quot;DYNAMIC&quot; = 1
+              };
+              uint;
+              uint;
+              uchar;
+              enum {
+                &quot;OPTIMISATION_TYPE_DEFAULT&quot; = 0,
+                &quot;OPTIMISATION_TYPE_ODT_TYPE_16&quot; = 1,
+                &quot;OPTIMISATION_TYPE_ODT_TYPE_32&quot; = 2,
+                &quot;OPTIMISATION_TYPE_ODT_TYPE_64&quot; = 3,
+                &quot;OPTIMISATION_TYPE_ODT_TYPE_ALIGNMENT&quot; = 4,
+                &quot;OPTIMISATION_TYPE_MAX_ENTRY_SIZE&quot; = 5
+              };
+              enum {
+                &quot;ADDRESS_EXTENSION_FREE&quot; = 0,
+                &quot;ADDRESS_EXTENSION_ODT&quot; = 1,
+                &quot;ADDRESS_EXTENSION_DAQ&quot; = 3
+              };
+              enum {
+                &quot;IDENTIFICATION_FIELD_TYPE_ABSOLUTE&quot; = 0,
+                &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_BYTE&quot; = 1,
+                &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD&quot; = 2,
+                &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD_ALIGNED&quot; = 3
+              };
+              enum {
+                &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_BYTE&quot; = 1,
+                &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_WORD&quot; = 2,
+                &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_DWORD&quot; = 4,
+                &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_DLONG&quot; = 8
+              };
+              uchar;
+              enum {
+                &quot;NO_OVERLOAD_INDICATION&quot; = 0,
+                &quot;OVERLOAD_INDICATION_PID&quot; = 1,
+                &quot;OVERLOAD_INDICATION_EVENT&quot; = 2
+              };
+              taggedstruct {
+                &quot;PRESCALER_SUPPORTED&quot; ;
+                &quot;RESUME_SUPPORTED&quot; ;
+                block &quot;STIM&quot; struct {
+                  enum {
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_BYTE&quot; = 1,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_WORD&quot; = 2,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_DWORD&quot; = 4,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_DLONG&quot; = 8
+                  };
+                  uchar;
+                  taggedstruct {
+                    &quot;BIT_STIM_SUPPORTED&quot; ;
+                  };
+                };
+                block &quot;TIMESTAMP_SUPPORTED&quot; struct {
+                  uint;
+                  enum {
+                    &quot;NO_TIME_STAMP&quot; = 0,
+                    &quot;SIZE_BYTE&quot; = 1,
+                    &quot;SIZE_WORD&quot; = 2,
+                    &quot;SIZE_DWORD&quot; = 4
+                  };
+                  enum {
+                    &quot;UNIT_1NS&quot; = 0,
+                    &quot;UNIT_10NS&quot; = 1,
+                    &quot;UNIT_100NS&quot; = 2,
+                    &quot;UNIT_1US&quot; = 3,
+                    &quot;UNIT_10US&quot; = 4,
+                    &quot;UNIT_100US&quot; = 5,
+                    &quot;UNIT_1MS&quot; = 6,
+                    &quot;UNIT_10MS&quot; = 7,
+                    &quot;UNIT_100MS&quot; = 8,
+                    &quot;UNIT_1S&quot; = 9
+                  };
+                  taggedstruct {
+                    &quot;TIMESTAMP_FIXED&quot; ;
+                  };
+                };
+                &quot;PID_OFF_SUPPORTED&quot; ;
+                (block &quot;DAQ_LIST&quot; struct {
+                  uint;
+                  taggedstruct {
+                    &quot;DAQ_LIST_TYPE&quot; enum {
+                      &quot;DAQ&quot; = 1,
+                      &quot;STIM&quot; = 2,
+                      &quot;DAQ_STIM&quot; = 3
+                    };
+                    &quot;MAX_ODT&quot; uchar;
+                    &quot;MAX_ODT_ENTRIES&quot; uchar;
+                    &quot;FIRST_PID&quot; uchar;
+                    &quot;EVENT_FIXED&quot; uint;
+                    block &quot;PREDEFINED&quot; taggedstruct {
+                      (block &quot;ODT&quot; struct {
+                        uchar;
+                        taggedstruct {
+                          (&quot;ODT_ENTRY&quot; struct {
+                            uchar;
+                            ulong;
+                            uchar;
+                            uchar;
+                            uchar;
+                          })*;
+                        };
+                      })*;
+                    };
+                  };
+                })*;
+                (block &quot;EVENT&quot; struct {
+                  char[101];
+                  char[9];
+                  uint;
+                  enum {
+                    &quot;DAQ&quot; = 1,
+                    &quot;STIM&quot; = 2,
+                    &quot;DAQ_STIM&quot; = 3
+                  };
+                  uchar;
+                  uchar;
+                  uchar;
+                  uchar;
+                })*;
+              };
+            };
+            block &quot;PAG&quot; struct {
+              uchar;
+              taggedstruct {
+                &quot;FREEZE_SUPPORTED&quot; ;
+              };
+            };
+            block &quot;PGM&quot; struct {
+              enum {
+                &quot;PGM_MODE_ABSOLUTE&quot; = 1,
+                &quot;PGM_MODE_FUNCTIONAL&quot; = 2,
+                &quot;PGM_MODE_ABSOLUTE_AND_FUNCTIONAL&quot; = 3
+              };
+              uchar;
+              uchar;
+              taggedstruct {
+                (block &quot;SECTOR&quot; struct {
+                  char[101];
+                  uchar;
+                  ulong;
+                  ulong;
+                  uchar;
+                  uchar;
+                  uchar;
+                })*;
+                &quot;COMMUNICATION_MODE_SUPPORTED&quot; taggedunion {
+                  &quot;BLOCK&quot; taggedstruct {
+                    &quot;SLAVE&quot; ;
+                    &quot;MASTER&quot; struct {
+                      uchar;
+                      uchar;
+                    };
+                  };
+                  &quot;INTERLEAVED&quot; uchar;
+                };
+              };
+            };
+            block &quot;DAQ_EVENT&quot; taggedunion {
+              &quot;FIXED_EVENT_LIST&quot; taggedstruct {
+                (&quot;EVENT&quot; uint)*;
+              };
+              &quot;VARIABLE&quot; taggedstruct {
+                block &quot;AVAILABLE_EVENT_LIST&quot; taggedstruct {
+                  (&quot;EVENT&quot; uint)*;
+                };
+                block &quot;DEFAULT_EVENT_LIST&quot; taggedstruct {
+                  (&quot;EVENT&quot; uint)*;
+                };
+              };
+            };
+            block &quot;XCP_ON_CAN&quot; struct {
+              uint;
+              taggedstruct {
+                &quot;CAN_ID_BROADCAST&quot; ulong;
+                &quot;CAN_ID_MASTER&quot; ulong;
+                &quot;CAN_ID_SLAVE&quot; ulong;
+                &quot;BAUDRATE&quot; ulong;
+                &quot;SAMPLE_POINT&quot; uchar;
+                &quot;SAMPLE_RATE&quot; enum {
+                  &quot;SINGLE&quot; = 1,
+                  &quot;TRIPLE&quot; = 3
+                };
+                &quot;BTL_CYCLES&quot; uchar;
+                &quot;SJW&quot; uchar;
+                &quot;SYNC_EDGE&quot; enum {
+                  &quot;SINGLE&quot; = 1,
+                  &quot;DUAL&quot; = 2
+                };
+                &quot;MAX_DLC_REQUIRED&quot; ;
+                (block &quot;DAQ_LIST_CAN_ID&quot; struct {
+                  uint;
+                  taggedstruct {
+                    &quot;VARIABLE&quot; ;
+                    &quot;FIXED&quot; ulong;
+                  };
+                })*;
+                block &quot;PROTOCOL_LAYER&quot; struct {
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uchar;
+                  uint;
+                  enum {
+                    &quot;BYTE_ORDER_MSB_LAST&quot; = 0,
+                    &quot;BYTE_ORDER_MSB_FIRST&quot; = 1
+                  };
+                  enum {
+                    &quot;ADDRESS_GRANULARITY_BYTE&quot; = 1,
+                    &quot;ADDRESS_GRANULARITY_WORD&quot; = 2,
+                    &quot;ADDRESS_GRANULARITY_DWORD&quot; = 4
+                  };
+                  taggedstruct {
+                    (&quot;OPTIONAL_CMD&quot; enum {
+                      &quot;GET_COMM_MODE_INFO&quot; = 251,
+                      &quot;GET_ID&quot; = 250,
+                      &quot;SET_REQUEST&quot; = 249,
+                      &quot;GET_SEED&quot; = 248,
+                      &quot;UNLOCK&quot; = 247,
+                      &quot;SET_MTA&quot; = 246,
+                      &quot;UPLOAD&quot; = 245,
+                      &quot;SHORT_UPLOAD&quot; = 244,
+                      &quot;BUILD_CHECKSUM&quot; = 243,
+                      &quot;TRANSPORT_LAYER_CMD&quot; = 242,
+                      &quot;USER_CMD&quot; = 241,
+                      &quot;DOWNLOAD&quot; = 240,
+                      &quot;DOWNLOAD_NEXT&quot; = 239,
+                      &quot;DOWNLOAD_MAX&quot; = 238,
+                      &quot;SHORT_DOWNLOAD&quot; = 237,
+                      &quot;MODIFY_BITS&quot; = 236,
+                      &quot;SET_CAL_PAGE&quot; = 235,
+                      &quot;GET_CAL_PAGE&quot; = 234,
+                      &quot;GET_PAG_PROCESSOR_INFO&quot; = 233,
+                      &quot;GET_SEGMENT_INFO&quot; = 232,
+                      &quot;GET_PAGE_INFO&quot; = 231,
+                      &quot;SET_SEGMENT_MODE&quot; = 230,
+                      &quot;GET_SEGMENT_MODE&quot; = 229,
+                      &quot;COPY_CAL_PAGE&quot; = 228,
+                      &quot;CLEAR_DAQ_LIST&quot; = 227,
+                      &quot;SET_DAQ_PTR&quot; = 226,
+                      &quot;WRITE_DAQ&quot; = 225,
+                      &quot;SET_DAQ_LIST_MODE&quot; = 224,
+                      &quot;GET_DAQ_LIST_MODE&quot; = 223,
+                      &quot;START_STOP_DAQ_LIST&quot; = 222,
+                      &quot;START_STOP_SYNCH&quot; = 221,
+                      &quot;GET_DAQ_CLOCK&quot; = 220,
+                      &quot;READ_DAQ&quot; = 219,
+                      &quot;GET_DAQ_PROCESSOR_INFO&quot; = 218,
+                      &quot;GET_DAQ_RESOLUTION_INFO&quot; = 217,
+                      &quot;GET_DAQ_LIST_INFO&quot; = 216,
+                      &quot;GET_DAQ_EVENT_INFO&quot; = 215,
+                      &quot;FREE_DAQ&quot; = 214,
+                      &quot;ALLOC_DAQ&quot; = 213,
+                      &quot;ALLOC_ODT&quot; = 212,
+                      &quot;ALLOC_ODT_ENTRY&quot; = 211,
+                      &quot;PROGRAM_START&quot; = 210,
+                      &quot;PROGRAM_CLEAR&quot; = 209,
+                      &quot;PROGRAM&quot; = 208,
+                      &quot;PROGRAM_RESET&quot; = 207,
+                      &quot;GET_PGM_PROCESSOR_INFO&quot; = 206,
+                      &quot;GET_SECTOR_INFO&quot; = 205,
+                      &quot;PROGRAM_PREPARE&quot; = 204,
+                      &quot;PROGRAM_FORMAT&quot; = 203,
+                      &quot;PROGRAM_NEXT&quot; = 202,
+                      &quot;PROGRAM_MAX&quot; = 201,
+                      &quot;PROGRAM_VERIFY&quot; = 200
+                    })*;
+                    &quot;COMMUNICATION_MODE_SUPPORTED&quot; taggedunion {
+                      &quot;BLOCK&quot; taggedstruct {
+                        &quot;SLAVE&quot; ;
+                        &quot;MASTER&quot; struct {
+                          uchar;
+                          uchar;
+                        };
+                      };
+                      &quot;INTERLEAVED&quot; uchar;
+                    };
+                    &quot;SEED_AND_KEY_EXTERNAL_FUNCTION&quot; char[256];
+                  };
+                };
+                block &quot;SEGMENT&quot; struct {
+                  uchar;
+                  uchar;
+                  uchar;
+                  uchar;
+                  uchar;
+                  taggedstruct {
+                    block &quot;CHECKSUM&quot; struct {
+                      enum {
+                        &quot;XCP_ADD_11&quot; = 1,
+                        &quot;XCP_ADD_12&quot; = 2,
+                        &quot;XCP_ADD_14&quot; = 3,
+                        &quot;XCP_ADD_22&quot; = 4,
+                        &quot;XCP_ADD_24&quot; = 5,
+                        &quot;XCP_ADD_44&quot; = 6,
+                        &quot;XCP_CRC_16&quot; = 7,
+                        &quot;XCP_CRC_16_CITT&quot; = 8,
+                        &quot;XCP_CRC_32&quot; = 9,
+                        &quot;XCP_USER_DEFINED&quot; = 255
+                      };
+                      taggedstruct {
+                        &quot;MAX_BLOCK_SIZE&quot; ulong;
+                        &quot;EXTERNAL_FUNCTION&quot; char[256];
+                      };
+                    };
+                    (block &quot;PAGE&quot; struct {
+                      uchar;
+                      enum {
+                        &quot;ECU_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;ECU_ACCESS_WITHOUT_XCP_ONLY&quot; = 1,
+                        &quot;ECU_ACCESS_WITH_XCP_ONLY&quot; = 2,
+                        &quot;ECU_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      enum {
+                        &quot;XCP_READ_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;XCP_READ_ACCESS_WITHOUT_ECU_ONLY&quot; = 1,
+                        &quot;XCP_READ_ACCESS_WITH_ECU_ONLY&quot; = 2,
+                        &quot;XCP_READ_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      enum {
+                        &quot;XCP_WRITE_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;XCP_WRITE_ACCESS_WITHOUT_ECU_ONLY&quot; = 1,
+                        &quot;XCP_WRITE_ACCESS_WITH_ECU_ONLY&quot; = 2,
+                        &quot;XCP_WRITE_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      taggedstruct {
+                        &quot;INIT_SEGMENT&quot; uchar;
+                      };
+                    })*;
+                    (block &quot;ADDRESS_MAPPING&quot; struct {
+                      ulong;
+                      ulong;
+                      ulong;
+                    })*;
+                    &quot;PGM_VERIFY&quot; ulong;
+                  };
+                };
+                block &quot;DAQ&quot; struct {
+                  enum {
+                    &quot;STATIC&quot; = 0,
+                    &quot;DYNAMIC&quot; = 1
+                  };
+                  uint;
+                  uint;
+                  uchar;
+                  enum {
+                    &quot;OPTIMISATION_TYPE_DEFAULT&quot; = 0,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_16&quot; = 1,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_32&quot; = 2,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_64&quot; = 3,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_ALIGNMENT&quot; = 4,
+                    &quot;OPTIMISATION_TYPE_MAX_ENTRY_SIZE&quot; = 5
+                  };
+                  enum {
+                    &quot;ADDRESS_EXTENSION_FREE&quot; = 0,
+                    &quot;ADDRESS_EXTENSION_ODT&quot; = 1,
+                    &quot;ADDRESS_EXTENSION_DAQ&quot; = 3
+                  };
+                  enum {
+                    &quot;IDENTIFICATION_FIELD_TYPE_ABSOLUTE&quot; = 0,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_BYTE&quot; = 1,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD&quot; = 2,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD_ALIGNED&quot; = 3
+                  };
+                  enum {
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_BYTE&quot; = 1,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_WORD&quot; = 2,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_DWORD&quot; = 4,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_DLONG&quot; = 8
+                  };
+                  uchar;
+                  enum {
+                    &quot;NO_OVERLOAD_INDICATION&quot; = 0,
+                    &quot;OVERLOAD_INDICATION_PID&quot; = 1,
+                    &quot;OVERLOAD_INDICATION_EVENT&quot; = 2
+                  };
+                  taggedstruct {
+                    &quot;PRESCALER_SUPPORTED&quot; ;
+                    &quot;RESUME_SUPPORTED&quot; ;
+                    block &quot;STIM&quot; struct {
+                      enum {
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_BYTE&quot; = 1,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_WORD&quot; = 2,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_DWORD&quot; = 4,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_DLONG&quot; = 8
+                      };
+                      uchar;
+                      taggedstruct {
+                        &quot;BIT_STIM_SUPPORTED&quot; ;
+                      };
+                    };
+                    block &quot;TIMESTAMP_SUPPORTED&quot; struct {
+                      uint;
+                      enum {
+                        &quot;NO_TIME_STAMP&quot; = 0,
+                        &quot;SIZE_BYTE&quot; = 1,
+                        &quot;SIZE_WORD&quot; = 2,
+                        &quot;SIZE_DWORD&quot; = 4
+                      };
+                      enum {
+                        &quot;UNIT_1NS&quot; = 0,
+                        &quot;UNIT_10NS&quot; = 1,
+                        &quot;UNIT_100NS&quot; = 2,
+                        &quot;UNIT_1US&quot; = 3,
+                        &quot;UNIT_10US&quot; = 4,
+                        &quot;UNIT_100US&quot; = 5,
+                        &quot;UNIT_1MS&quot; = 6,
+                        &quot;UNIT_10MS&quot; = 7,
+                        &quot;UNIT_100MS&quot; = 8,
+                        &quot;UNIT_1S&quot; = 9
+                      };
+                      taggedstruct {
+                        &quot;TIMESTAMP_FIXED&quot; ;
+                      };
+                    };
+                    &quot;PID_OFF_SUPPORTED&quot; ;
+                    (block &quot;DAQ_LIST&quot; struct {
+                      uint;
+                      taggedstruct {
+                        &quot;DAQ_LIST_TYPE&quot; enum {
+                          &quot;DAQ&quot; = 1,
+                          &quot;STIM&quot; = 2,
+                          &quot;DAQ_STIM&quot; = 3
+                        };
+                        &quot;MAX_ODT&quot; uchar;
+                        &quot;MAX_ODT_ENTRIES&quot; uchar;
+                        &quot;FIRST_PID&quot; uchar;
+                        &quot;EVENT_FIXED&quot; uint;
+                        block &quot;PREDEFINED&quot; taggedstruct {
+                          (block &quot;ODT&quot; struct {
+                            uchar;
+                            taggedstruct {
+                              (&quot;ODT_ENTRY&quot; struct {
+                                uchar;
+                                ulong;
+                                uchar;
+                                uchar;
+                                uchar;
+                              })*;
+                            };
+                          })*;
+                        };
+                      };
+                    })*;
+                    (block &quot;EVENT&quot; struct {
+                      char[101];
+                      char[9];
+                      uint;
+                      enum {
+                        &quot;DAQ&quot; = 1,
+                        &quot;STIM&quot; = 2,
+                        &quot;DAQ_STIM&quot; = 3
+                      };
+                      uchar;
+                      uchar;
+                      uchar;
+                      uchar;
+                    })*;
+                  };
+                };
+                block &quot;PAG&quot; struct {
+                  uchar;
+                  taggedstruct {
+                    &quot;FREEZE_SUPPORTED&quot; ;
+                  };
+                };
+                block &quot;PGM&quot; struct {
+                  enum {
+                    &quot;PGM_MODE_ABSOLUTE&quot; = 1,
+                    &quot;PGM_MODE_FUNCTIONAL&quot; = 2,
+                    &quot;PGM_MODE_ABSOLUTE_AND_FUNCTIONAL&quot; = 3
+                  };
+                  uchar;
+                  uchar;
+                  taggedstruct {
+                    (block &quot;SECTOR&quot; struct {
+                      char[101];
+                      uchar;
+                      ulong;
+                      ulong;
+                      uchar;
+                      uchar;
+                      uchar;
+                    })*;
+                    &quot;COMMUNICATION_MODE_SUPPORTED&quot; taggedunion {
+                      &quot;BLOCK&quot; taggedstruct {
+                        &quot;SLAVE&quot; ;
+                        &quot;MASTER&quot; struct {
+                          uchar;
+                          uchar;
+                        };
+                      };
+                      &quot;INTERLEAVED&quot; uchar;
+                    };
+                  };
+                };
+                block &quot;DAQ_EVENT&quot; taggedunion {
+                  &quot;FIXED_EVENT_LIST&quot; taggedstruct {
+                    (&quot;EVENT&quot; uint)*;
+                  };
+                  &quot;VARIABLE&quot; taggedstruct {
+                    block &quot;AVAILABLE_EVENT_LIST&quot; taggedstruct {
+                      (&quot;EVENT&quot; uint)*;
+                    };
+                    block &quot;DEFAULT_EVENT_LIST&quot; taggedstruct {
+                      (&quot;EVENT&quot; uint)*;
+                    };
+                  };
+                };
+              };
+            };
+            block &quot;XCP_ON_SxI&quot; struct {
+              uint;
+              ulong;
+              taggedstruct {
+                &quot;ASYNCH_FULL_DUPLEX_MODE&quot; struct {
+                  enum {
+                    &quot;PARITY_NONE&quot; = 0,
+                    &quot;PARITY_ODD&quot; = 1,
+                    &quot;PARITY_EVEN&quot; = 2
+                  };
+                  enum {
+                    &quot;ONE_STOP_BIT&quot; = 1,
+                    &quot;TWO_STOP_BITS&quot; = 2
+                  };
+                };
+                &quot;SYNCH_FULL_DUPLEX_MODE_BYTE&quot; ;
+                &quot;SYNCH_FULL_DUPLEX_MODE_WORD&quot; ;
+                &quot;SYNCH_FULL_DUPLEX_MODE_DWORD&quot; ;
+                &quot;SYNCH_MASTER_SLAVE_MODE_BYTE&quot; ;
+                &quot;SYNCH_MASTER_SLAVE_MODE_WORD&quot; ;
+                &quot;SYNCH_MASTER_SLAVE_MODE_DWORD&quot; ;
+              };
+              enum {
+                &quot;HEADER_LEN_BYTE&quot; = 0,
+                &quot;HEADER_LEN_CTR_BYTE&quot; = 1,
+                &quot;HEADER_LEN_WORD&quot; = 2,
+                &quot;HEADER_LEN_CTR_WORD&quot; = 3
+              };
+              enum {
+                &quot;NO_CHECKSUM&quot; = 0,
+                &quot;CHECKSUM_BYTE&quot; = 1,
+                &quot;CHECKSUM_WORD&quot; = 2
+              };
+              taggedstruct {
+                block &quot;PROTOCOL_LAYER&quot; struct {
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uchar;
+                  uint;
+                  enum {
+                    &quot;BYTE_ORDER_MSB_LAST&quot; = 0,
+                    &quot;BYTE_ORDER_MSB_FIRST&quot; = 1
+                  };
+                  enum {
+                    &quot;ADDRESS_GRANULARITY_BYTE&quot; = 1,
+                    &quot;ADDRESS_GRANULARITY_WORD&quot; = 2,
+                    &quot;ADDRESS_GRANULARITY_DWORD&quot; = 4
+                  };
+                  taggedstruct {
+                    (&quot;OPTIONAL_CMD&quot; enum {
+                      &quot;GET_COMM_MODE_INFO&quot; = 251,
+                      &quot;GET_ID&quot; = 250,
+                      &quot;SET_REQUEST&quot; = 249,
+                      &quot;GET_SEED&quot; = 248,
+                      &quot;UNLOCK&quot; = 247,
+                      &quot;SET_MTA&quot; = 246,
+                      &quot;UPLOAD&quot; = 245,
+                      &quot;SHORT_UPLOAD&quot; = 244,
+                      &quot;BUILD_CHECKSUM&quot; = 243,
+                      &quot;TRANSPORT_LAYER_CMD&quot; = 242,
+                      &quot;USER_CMD&quot; = 241,
+                      &quot;DOWNLOAD&quot; = 240,
+                      &quot;DOWNLOAD_NEXT&quot; = 239,
+                      &quot;DOWNLOAD_MAX&quot; = 238,
+                      &quot;SHORT_DOWNLOAD&quot; = 237,
+                      &quot;MODIFY_BITS&quot; = 236,
+                      &quot;SET_CAL_PAGE&quot; = 235,
+                      &quot;GET_CAL_PAGE&quot; = 234,
+                      &quot;GET_PAG_PROCESSOR_INFO&quot; = 233,
+                      &quot;GET_SEGMENT_INFO&quot; = 232,
+                      &quot;GET_PAGE_INFO&quot; = 231,
+                      &quot;SET_SEGMENT_MODE&quot; = 230,
+                      &quot;GET_SEGMENT_MODE&quot; = 229,
+                      &quot;COPY_CAL_PAGE&quot; = 228,
+                      &quot;CLEAR_DAQ_LIST&quot; = 227,
+                      &quot;SET_DAQ_PTR&quot; = 226,
+                      &quot;WRITE_DAQ&quot; = 225,
+                      &quot;SET_DAQ_LIST_MODE&quot; = 224,
+                      &quot;GET_DAQ_LIST_MODE&quot; = 223,
+                      &quot;START_STOP_DAQ_LIST&quot; = 222,
+                      &quot;START_STOP_SYNCH&quot; = 221,
+                      &quot;GET_DAQ_CLOCK&quot; = 220,
+                      &quot;READ_DAQ&quot; = 219,
+                      &quot;GET_DAQ_PROCESSOR_INFO&quot; = 218,
+                      &quot;GET_DAQ_RESOLUTION_INFO&quot; = 217,
+                      &quot;GET_DAQ_LIST_INFO&quot; = 216,
+                      &quot;GET_DAQ_EVENT_INFO&quot; = 215,
+                      &quot;FREE_DAQ&quot; = 214,
+                      &quot;ALLOC_DAQ&quot; = 213,
+                      &quot;ALLOC_ODT&quot; = 212,
+                      &quot;ALLOC_ODT_ENTRY&quot; = 211,
+                      &quot;PROGRAM_START&quot; = 210,
+                      &quot;PROGRAM_CLEAR&quot; = 209,
+                      &quot;PROGRAM&quot; = 208,
+                      &quot;PROGRAM_RESET&quot; = 207,
+                      &quot;GET_PGM_PROCESSOR_INFO&quot; = 206,
+                      &quot;GET_SECTOR_INFO&quot; = 205,
+                      &quot;PROGRAM_PREPARE&quot; = 204,
+                      &quot;PROGRAM_FORMAT&quot; = 203,
+                      &quot;PROGRAM_NEXT&quot; = 202,
+                      &quot;PROGRAM_MAX&quot; = 201,
+                      &quot;PROGRAM_VERIFY&quot; = 200
+                    })*;
+                    &quot;COMMUNICATION_MODE_SUPPORTED&quot; taggedunion {
+                      &quot;BLOCK&quot; taggedstruct {
+                        &quot;SLAVE&quot; ;
+                        &quot;MASTER&quot; struct {
+                          uchar;
+                          uchar;
+                        };
+                      };
+                      &quot;INTERLEAVED&quot; uchar;
+                    };
+                    &quot;SEED_AND_KEY_EXTERNAL_FUNCTION&quot; char[256];
+                  };
+                };
+                block &quot;SEGMENT&quot; struct {
+                  uchar;
+                  uchar;
+                  uchar;
+                  uchar;
+                  uchar;
+                  taggedstruct {
+                    block &quot;CHECKSUM&quot; struct {
+                      enum {
+                        &quot;XCP_ADD_11&quot; = 1,
+                        &quot;XCP_ADD_12&quot; = 2,
+                        &quot;XCP_ADD_14&quot; = 3,
+                        &quot;XCP_ADD_22&quot; = 4,
+                        &quot;XCP_ADD_24&quot; = 5,
+                        &quot;XCP_ADD_44&quot; = 6,
+                        &quot;XCP_CRC_16&quot; = 7,
+                        &quot;XCP_CRC_16_CITT&quot; = 8,
+                        &quot;XCP_CRC_32&quot; = 9,
+                        &quot;XCP_USER_DEFINED&quot; = 255
+                      };
+                      taggedstruct {
+                        &quot;MAX_BLOCK_SIZE&quot; ulong;
+                        &quot;EXTERNAL_FUNCTION&quot; char[256];
+                      };
+                    };
+                    (block &quot;PAGE&quot; struct {
+                      uchar;
+                      enum {
+                        &quot;ECU_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;ECU_ACCESS_WITHOUT_XCP_ONLY&quot; = 1,
+                        &quot;ECU_ACCESS_WITH_XCP_ONLY&quot; = 2,
+                        &quot;ECU_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      enum {
+                        &quot;XCP_READ_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;XCP_READ_ACCESS_WITHOUT_ECU_ONLY&quot; = 1,
+                        &quot;XCP_READ_ACCESS_WITH_ECU_ONLY&quot; = 2,
+                        &quot;XCP_READ_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      enum {
+                        &quot;XCP_WRITE_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;XCP_WRITE_ACCESS_WITHOUT_ECU_ONLY&quot; = 1,
+                        &quot;XCP_WRITE_ACCESS_WITH_ECU_ONLY&quot; = 2,
+                        &quot;XCP_WRITE_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      taggedstruct {
+                        &quot;INIT_SEGMENT&quot; uchar;
+                      };
+                    })*;
+                    (block &quot;ADDRESS_MAPPING&quot; struct {
+                      ulong;
+                      ulong;
+                      ulong;
+                    })*;
+                    &quot;PGM_VERIFY&quot; ulong;
+                  };
+                };
+                block &quot;DAQ&quot; struct {
+                  enum {
+                    &quot;STATIC&quot; = 0,
+                    &quot;DYNAMIC&quot; = 1
+                  };
+                  uint;
+                  uint;
+                  uchar;
+                  enum {
+                    &quot;OPTIMISATION_TYPE_DEFAULT&quot; = 0,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_16&quot; = 1,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_32&quot; = 2,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_64&quot; = 3,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_ALIGNMENT&quot; = 4,
+                    &quot;OPTIMISATION_TYPE_MAX_ENTRY_SIZE&quot; = 5
+                  };
+                  enum {
+                    &quot;ADDRESS_EXTENSION_FREE&quot; = 0,
+                    &quot;ADDRESS_EXTENSION_ODT&quot; = 1,
+                    &quot;ADDRESS_EXTENSION_DAQ&quot; = 3
+                  };
+                  enum {
+                    &quot;IDENTIFICATION_FIELD_TYPE_ABSOLUTE&quot; = 0,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_BYTE&quot; = 1,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD&quot; = 2,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD_ALIGNED&quot; = 3
+                  };
+                  enum {
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_BYTE&quot; = 1,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_WORD&quot; = 2,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_DWORD&quot; = 4,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_DLONG&quot; = 8
+                  };
+                  uchar;
+                  enum {
+                    &quot;NO_OVERLOAD_INDICATION&quot; = 0,
+                    &quot;OVERLOAD_INDICATION_PID&quot; = 1,
+                    &quot;OVERLOAD_INDICATION_EVENT&quot; = 2
+                  };
+                  taggedstruct {
+                    &quot;PRESCALER_SUPPORTED&quot; ;
+                    &quot;RESUME_SUPPORTED&quot; ;
+                    block &quot;STIM&quot; struct {
+                      enum {
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_BYTE&quot; = 1,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_WORD&quot; = 2,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_DWORD&quot; = 4,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_DLONG&quot; = 8
+                      };
+                      uchar;
+                      taggedstruct {
+                        &quot;BIT_STIM_SUPPORTED&quot; ;
+                      };
+                    };
+                    block &quot;TIMESTAMP_SUPPORTED&quot; struct {
+                      uint;
+                      enum {
+                        &quot;NO_TIME_STAMP&quot; = 0,
+                        &quot;SIZE_BYTE&quot; = 1,
+                        &quot;SIZE_WORD&quot; = 2,
+                        &quot;SIZE_DWORD&quot; = 4
+                      };
+                      enum {
+                        &quot;UNIT_1NS&quot; = 0,
+                        &quot;UNIT_10NS&quot; = 1,
+                        &quot;UNIT_100NS&quot; = 2,
+                        &quot;UNIT_1US&quot; = 3,
+                        &quot;UNIT_10US&quot; = 4,
+                        &quot;UNIT_100US&quot; = 5,
+                        &quot;UNIT_1MS&quot; = 6,
+                        &quot;UNIT_10MS&quot; = 7,
+                        &quot;UNIT_100MS&quot; = 8,
+                        &quot;UNIT_1S&quot; = 9
+                      };
+                      taggedstruct {
+                        &quot;TIMESTAMP_FIXED&quot; ;
+                      };
+                    };
+                    &quot;PID_OFF_SUPPORTED&quot; ;
+                    (block &quot;DAQ_LIST&quot; struct {
+                      uint;
+                      taggedstruct {
+                        &quot;DAQ_LIST_TYPE&quot; enum {
+                          &quot;DAQ&quot; = 1,
+                          &quot;STIM&quot; = 2,
+                          &quot;DAQ_STIM&quot; = 3
+                        };
+                        &quot;MAX_ODT&quot; uchar;
+                        &quot;MAX_ODT_ENTRIES&quot; uchar;
+                        &quot;FIRST_PID&quot; uchar;
+                        &quot;EVENT_FIXED&quot; uint;
+                        block &quot;PREDEFINED&quot; taggedstruct {
+                          (block &quot;ODT&quot; struct {
+                            uchar;
+                            taggedstruct {
+                              (&quot;ODT_ENTRY&quot; struct {
+                                uchar;
+                                ulong;
+                                uchar;
+                                uchar;
+                                uchar;
+                              })*;
+                            };
+                          })*;
+                        };
+                      };
+                    })*;
+                    (block &quot;EVENT&quot; struct {
+                      char[101];
+                      char[9];
+                      uint;
+                      enum {
+                        &quot;DAQ&quot; = 1,
+                        &quot;STIM&quot; = 2,
+                        &quot;DAQ_STIM&quot; = 3
+                      };
+                      uchar;
+                      uchar;
+                      uchar;
+                      uchar;
+                    })*;
+                  };
+                };
+                block &quot;PAG&quot; struct {
+                  uchar;
+                  taggedstruct {
+                    &quot;FREEZE_SUPPORTED&quot; ;
+                  };
+                };
+                block &quot;PGM&quot; struct {
+                  enum {
+                    &quot;PGM_MODE_ABSOLUTE&quot; = 1,
+                    &quot;PGM_MODE_FUNCTIONAL&quot; = 2,
+                    &quot;PGM_MODE_ABSOLUTE_AND_FUNCTIONAL&quot; = 3
+                  };
+                  uchar;
+                  uchar;
+                  taggedstruct {
+                    (block &quot;SECTOR&quot; struct {
+                      char[101];
+                      uchar;
+                      ulong;
+                      ulong;
+                      uchar;
+                      uchar;
+                      uchar;
+                    })*;
+                    &quot;COMMUNICATION_MODE_SUPPORTED&quot; taggedunion {
+                      &quot;BLOCK&quot; taggedstruct {
+                        &quot;SLAVE&quot; ;
+                        &quot;MASTER&quot; struct {
+                          uchar;
+                          uchar;
+                        };
+                      };
+                      &quot;INTERLEAVED&quot; uchar;
+                    };
+                  };
+                };
+                block &quot;DAQ_EVENT&quot; taggedunion {
+                  &quot;FIXED_EVENT_LIST&quot; taggedstruct {
+                    (&quot;EVENT&quot; uint)*;
+                  };
+                  &quot;VARIABLE&quot; taggedstruct {
+                    block &quot;AVAILABLE_EVENT_LIST&quot; taggedstruct {
+                      (&quot;EVENT&quot; uint)*;
+                    };
+                    block &quot;DEFAULT_EVENT_LIST&quot; taggedstruct {
+                      (&quot;EVENT&quot; uint)*;
+                    };
+                  };
+                };
+              };
+            };
+            block &quot;XCP_ON_TCP_IP&quot; struct {
+              uint;
+              uint;
+              taggedunion {
+                &quot;HOST_NAME&quot; char[256];
+                &quot;ADDRESS&quot; char[15];
+              };
+              taggedstruct {
+                block &quot;PROTOCOL_LAYER&quot; struct {
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uchar;
+                  uint;
+                  enum {
+                    &quot;BYTE_ORDER_MSB_LAST&quot; = 0,
+                    &quot;BYTE_ORDER_MSB_FIRST&quot; = 1
+                  };
+                  enum {
+                    &quot;ADDRESS_GRANULARITY_BYTE&quot; = 1,
+                    &quot;ADDRESS_GRANULARITY_WORD&quot; = 2,
+                    &quot;ADDRESS_GRANULARITY_DWORD&quot; = 4
+                  };
+                  taggedstruct {
+                    (&quot;OPTIONAL_CMD&quot; enum {
+                      &quot;GET_COMM_MODE_INFO&quot; = 251,
+                      &quot;GET_ID&quot; = 250,
+                      &quot;SET_REQUEST&quot; = 249,
+                      &quot;GET_SEED&quot; = 248,
+                      &quot;UNLOCK&quot; = 247,
+                      &quot;SET_MTA&quot; = 246,
+                      &quot;UPLOAD&quot; = 245,
+                      &quot;SHORT_UPLOAD&quot; = 244,
+                      &quot;BUILD_CHECKSUM&quot; = 243,
+                      &quot;TRANSPORT_LAYER_CMD&quot; = 242,
+                      &quot;USER_CMD&quot; = 241,
+                      &quot;DOWNLOAD&quot; = 240,
+                      &quot;DOWNLOAD_NEXT&quot; = 239,
+                      &quot;DOWNLOAD_MAX&quot; = 238,
+                      &quot;SHORT_DOWNLOAD&quot; = 237,
+                      &quot;MODIFY_BITS&quot; = 236,
+                      &quot;SET_CAL_PAGE&quot; = 235,
+                      &quot;GET_CAL_PAGE&quot; = 234,
+                      &quot;GET_PAG_PROCESSOR_INFO&quot; = 233,
+                      &quot;GET_SEGMENT_INFO&quot; = 232,
+                      &quot;GET_PAGE_INFO&quot; = 231,
+                      &quot;SET_SEGMENT_MODE&quot; = 230,
+                      &quot;GET_SEGMENT_MODE&quot; = 229,
+                      &quot;COPY_CAL_PAGE&quot; = 228,
+                      &quot;CLEAR_DAQ_LIST&quot; = 227,
+                      &quot;SET_DAQ_PTR&quot; = 226,
+                      &quot;WRITE_DAQ&quot; = 225,
+                      &quot;SET_DAQ_LIST_MODE&quot; = 224,
+                      &quot;GET_DAQ_LIST_MODE&quot; = 223,
+                      &quot;START_STOP_DAQ_LIST&quot; = 222,
+                      &quot;START_STOP_SYNCH&quot; = 221,
+                      &quot;GET_DAQ_CLOCK&quot; = 220,
+                      &quot;READ_DAQ&quot; = 219,
+                      &quot;GET_DAQ_PROCESSOR_INFO&quot; = 218,
+                      &quot;GET_DAQ_RESOLUTION_INFO&quot; = 217,
+                      &quot;GET_DAQ_LIST_INFO&quot; = 216,
+                      &quot;GET_DAQ_EVENT_INFO&quot; = 215,
+                      &quot;FREE_DAQ&quot; = 214,
+                      &quot;ALLOC_DAQ&quot; = 213,
+                      &quot;ALLOC_ODT&quot; = 212,
+                      &quot;ALLOC_ODT_ENTRY&quot; = 211,
+                      &quot;PROGRAM_START&quot; = 210,
+                      &quot;PROGRAM_CLEAR&quot; = 209,
+                      &quot;PROGRAM&quot; = 208,
+                      &quot;PROGRAM_RESET&quot; = 207,
+                      &quot;GET_PGM_PROCESSOR_INFO&quot; = 206,
+                      &quot;GET_SECTOR_INFO&quot; = 205,
+                      &quot;PROGRAM_PREPARE&quot; = 204,
+                      &quot;PROGRAM_FORMAT&quot; = 203,
+                      &quot;PROGRAM_NEXT&quot; = 202,
+                      &quot;PROGRAM_MAX&quot; = 201,
+                      &quot;PROGRAM_VERIFY&quot; = 200
+                    })*;
+                    &quot;COMMUNICATION_MODE_SUPPORTED&quot; taggedunion {
+                      &quot;BLOCK&quot; taggedstruct {
+                        &quot;SLAVE&quot; ;
+                        &quot;MASTER&quot; struct {
+                          uchar;
+                          uchar;
+                        };
+                      };
+                      &quot;INTERLEAVED&quot; uchar;
+                    };
+                    &quot;SEED_AND_KEY_EXTERNAL_FUNCTION&quot; char[256];
+                  };
+                };
+                block &quot;SEGMENT&quot; struct {
+                  uchar;
+                  uchar;
+                  uchar;
+                  uchar;
+                  uchar;
+                  taggedstruct {
+                    block &quot;CHECKSUM&quot; struct {
+                      enum {
+                        &quot;XCP_ADD_11&quot; = 1,
+                        &quot;XCP_ADD_12&quot; = 2,
+                        &quot;XCP_ADD_14&quot; = 3,
+                        &quot;XCP_ADD_22&quot; = 4,
+                        &quot;XCP_ADD_24&quot; = 5,
+                        &quot;XCP_ADD_44&quot; = 6,
+                        &quot;XCP_CRC_16&quot; = 7,
+                        &quot;XCP_CRC_16_CITT&quot; = 8,
+                        &quot;XCP_CRC_32&quot; = 9,
+                        &quot;XCP_USER_DEFINED&quot; = 255
+                      };
+                      taggedstruct {
+                        &quot;MAX_BLOCK_SIZE&quot; ulong;
+                        &quot;EXTERNAL_FUNCTION&quot; char[256];
+                      };
+                    };
+                    (block &quot;PAGE&quot; struct {
+                      uchar;
+                      enum {
+                        &quot;ECU_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;ECU_ACCESS_WITHOUT_XCP_ONLY&quot; = 1,
+                        &quot;ECU_ACCESS_WITH_XCP_ONLY&quot; = 2,
+                        &quot;ECU_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      enum {
+                        &quot;XCP_READ_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;XCP_READ_ACCESS_WITHOUT_ECU_ONLY&quot; = 1,
+                        &quot;XCP_READ_ACCESS_WITH_ECU_ONLY&quot; = 2,
+                        &quot;XCP_READ_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      enum {
+                        &quot;XCP_WRITE_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;XCP_WRITE_ACCESS_WITHOUT_ECU_ONLY&quot; = 1,
+                        &quot;XCP_WRITE_ACCESS_WITH_ECU_ONLY&quot; = 2,
+                        &quot;XCP_WRITE_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      taggedstruct {
+                        &quot;INIT_SEGMENT&quot; uchar;
+                      };
+                    })*;
+                    (block &quot;ADDRESS_MAPPING&quot; struct {
+                      ulong;
+                      ulong;
+                      ulong;
+                    })*;
+                    &quot;PGM_VERIFY&quot; ulong;
+                  };
+                };
+                block &quot;DAQ&quot; struct {
+                  enum {
+                    &quot;STATIC&quot; = 0,
+                    &quot;DYNAMIC&quot; = 1
+                  };
+                  uint;
+                  uint;
+                  uchar;
+                  enum {
+                    &quot;OPTIMISATION_TYPE_DEFAULT&quot; = 0,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_16&quot; = 1,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_32&quot; = 2,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_64&quot; = 3,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_ALIGNMENT&quot; = 4,
+                    &quot;OPTIMISATION_TYPE_MAX_ENTRY_SIZE&quot; = 5
+                  };
+                  enum {
+                    &quot;ADDRESS_EXTENSION_FREE&quot; = 0,
+                    &quot;ADDRESS_EXTENSION_ODT&quot; = 1,
+                    &quot;ADDRESS_EXTENSION_DAQ&quot; = 3
+                  };
+                  enum {
+                    &quot;IDENTIFICATION_FIELD_TYPE_ABSOLUTE&quot; = 0,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_BYTE&quot; = 1,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD&quot; = 2,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD_ALIGNED&quot; = 3
+                  };
+                  enum {
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_BYTE&quot; = 1,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_WORD&quot; = 2,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_DWORD&quot; = 4,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_DLONG&quot; = 8
+                  };
+                  uchar;
+                  enum {
+                    &quot;NO_OVERLOAD_INDICATION&quot; = 0,
+                    &quot;OVERLOAD_INDICATION_PID&quot; = 1,
+                    &quot;OVERLOAD_INDICATION_EVENT&quot; = 2
+                  };
+                  taggedstruct {
+                    &quot;PRESCALER_SUPPORTED&quot; ;
+                    &quot;RESUME_SUPPORTED&quot; ;
+                    block &quot;STIM&quot; struct {
+                      enum {
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_BYTE&quot; = 1,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_WORD&quot; = 2,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_DWORD&quot; = 4,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_DLONG&quot; = 8
+                      };
+                      uchar;
+                      taggedstruct {
+                        &quot;BIT_STIM_SUPPORTED&quot; ;
+                      };
+                    };
+                    block &quot;TIMESTAMP_SUPPORTED&quot; struct {
+                      uint;
+                      enum {
+                        &quot;NO_TIME_STAMP&quot; = 0,
+                        &quot;SIZE_BYTE&quot; = 1,
+                        &quot;SIZE_WORD&quot; = 2,
+                        &quot;SIZE_DWORD&quot; = 4
+                      };
+                      enum {
+                        &quot;UNIT_1NS&quot; = 0,
+                        &quot;UNIT_10NS&quot; = 1,
+                        &quot;UNIT_100NS&quot; = 2,
+                        &quot;UNIT_1US&quot; = 3,
+                        &quot;UNIT_10US&quot; = 4,
+                        &quot;UNIT_100US&quot; = 5,
+                        &quot;UNIT_1MS&quot; = 6,
+                        &quot;UNIT_10MS&quot; = 7,
+                        &quot;UNIT_100MS&quot; = 8,
+                        &quot;UNIT_1S&quot; = 9
+                      };
+                      taggedstruct {
+                        &quot;TIMESTAMP_FIXED&quot; ;
+                      };
+                    };
+                    &quot;PID_OFF_SUPPORTED&quot; ;
+                    (block &quot;DAQ_LIST&quot; struct {
+                      uint;
+                      taggedstruct {
+                        &quot;DAQ_LIST_TYPE&quot; enum {
+                          &quot;DAQ&quot; = 1,
+                          &quot;STIM&quot; = 2,
+                          &quot;DAQ_STIM&quot; = 3
+                        };
+                        &quot;MAX_ODT&quot; uchar;
+                        &quot;MAX_ODT_ENTRIES&quot; uchar;
+                        &quot;FIRST_PID&quot; uchar;
+                        &quot;EVENT_FIXED&quot; uint;
+                        block &quot;PREDEFINED&quot; taggedstruct {
+                          (block &quot;ODT&quot; struct {
+                            uchar;
+                            taggedstruct {
+                              (&quot;ODT_ENTRY&quot; struct {
+                                uchar;
+                                ulong;
+                                uchar;
+                                uchar;
+                                uchar;
+                              })*;
+                            };
+                          })*;
+                        };
+                      };
+                    })*;
+                    (block &quot;EVENT&quot; struct {
+                      char[101];
+                      char[9];
+                      uint;
+                      enum {
+                        &quot;DAQ&quot; = 1,
+                        &quot;STIM&quot; = 2,
+                        &quot;DAQ_STIM&quot; = 3
+                      };
+                      uchar;
+                      uchar;
+                      uchar;
+                      uchar;
+                    })*;
+                  };
+                };
+                block &quot;PAG&quot; struct {
+                  uchar;
+                  taggedstruct {
+                    &quot;FREEZE_SUPPORTED&quot; ;
+                  };
+                };
+                block &quot;PGM&quot; struct {
+                  enum {
+                    &quot;PGM_MODE_ABSOLUTE&quot; = 1,
+                    &quot;PGM_MODE_FUNCTIONAL&quot; = 2,
+                    &quot;PGM_MODE_ABSOLUTE_AND_FUNCTIONAL&quot; = 3
+                  };
+                  uchar;
+                  uchar;
+                  taggedstruct {
+                    (block &quot;SECTOR&quot; struct {
+                      char[101];
+                      uchar;
+                      ulong;
+                      ulong;
+                      uchar;
+                      uchar;
+                      uchar;
+                    })*;
+                    &quot;COMMUNICATION_MODE_SUPPORTED&quot; taggedunion {
+                      &quot;BLOCK&quot; taggedstruct {
+                        &quot;SLAVE&quot; ;
+                        &quot;MASTER&quot; struct {
+                          uchar;
+                          uchar;
+                        };
+                      };
+                      &quot;INTERLEAVED&quot; uchar;
+                    };
+                  };
+                };
+                block &quot;DAQ_EVENT&quot; taggedunion {
+                  &quot;FIXED_EVENT_LIST&quot; taggedstruct {
+                    (&quot;EVENT&quot; uint)*;
+                  };
+                  &quot;VARIABLE&quot; taggedstruct {
+                    block &quot;AVAILABLE_EVENT_LIST&quot; taggedstruct {
+                      (&quot;EVENT&quot; uint)*;
+                    };
+                    block &quot;DEFAULT_EVENT_LIST&quot; taggedstruct {
+                      (&quot;EVENT&quot; uint)*;
+                    };
+                  };
+                };
+              };
+            };
+            block &quot;XCP_ON_UDP_IP&quot; struct {
+              uint;
+              uint;
+              taggedunion {
+                &quot;HOST_NAME&quot; char[256];
+                &quot;ADDRESS&quot; char[15];
+              };
+              taggedstruct {
+                block &quot;PROTOCOL_LAYER&quot; struct {
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uchar;
+                  uint;
+                  enum {
+                    &quot;BYTE_ORDER_MSB_LAST&quot; = 0,
+                    &quot;BYTE_ORDER_MSB_FIRST&quot; = 1
+                  };
+                  enum {
+                    &quot;ADDRESS_GRANULARITY_BYTE&quot; = 1,
+                    &quot;ADDRESS_GRANULARITY_WORD&quot; = 2,
+                    &quot;ADDRESS_GRANULARITY_DWORD&quot; = 4
+                  };
+                  taggedstruct {
+                    (&quot;OPTIONAL_CMD&quot; enum {
+                      &quot;GET_COMM_MODE_INFO&quot; = 251,
+                      &quot;GET_ID&quot; = 250,
+                      &quot;SET_REQUEST&quot; = 249,
+                      &quot;GET_SEED&quot; = 248,
+                      &quot;UNLOCK&quot; = 247,
+                      &quot;SET_MTA&quot; = 246,
+                      &quot;UPLOAD&quot; = 245,
+                      &quot;SHORT_UPLOAD&quot; = 244,
+                      &quot;BUILD_CHECKSUM&quot; = 243,
+                      &quot;TRANSPORT_LAYER_CMD&quot; = 242,
+                      &quot;USER_CMD&quot; = 241,
+                      &quot;DOWNLOAD&quot; = 240,
+                      &quot;DOWNLOAD_NEXT&quot; = 239,
+                      &quot;DOWNLOAD_MAX&quot; = 238,
+                      &quot;SHORT_DOWNLOAD&quot; = 237,
+                      &quot;MODIFY_BITS&quot; = 236,
+                      &quot;SET_CAL_PAGE&quot; = 235,
+                      &quot;GET_CAL_PAGE&quot; = 234,
+                      &quot;GET_PAG_PROCESSOR_INFO&quot; = 233,
+                      &quot;GET_SEGMENT_INFO&quot; = 232,
+                      &quot;GET_PAGE_INFO&quot; = 231,
+                      &quot;SET_SEGMENT_MODE&quot; = 230,
+                      &quot;GET_SEGMENT_MODE&quot; = 229,
+                      &quot;COPY_CAL_PAGE&quot; = 228,
+                      &quot;CLEAR_DAQ_LIST&quot; = 227,
+                      &quot;SET_DAQ_PTR&quot; = 226,
+                      &quot;WRITE_DAQ&quot; = 225,
+                      &quot;SET_DAQ_LIST_MODE&quot; = 224,
+                      &quot;GET_DAQ_LIST_MODE&quot; = 223,
+                      &quot;START_STOP_DAQ_LIST&quot; = 222,
+                      &quot;START_STOP_SYNCH&quot; = 221,
+                      &quot;GET_DAQ_CLOCK&quot; = 220,
+                      &quot;READ_DAQ&quot; = 219,
+                      &quot;GET_DAQ_PROCESSOR_INFO&quot; = 218,
+                      &quot;GET_DAQ_RESOLUTION_INFO&quot; = 217,
+                      &quot;GET_DAQ_LIST_INFO&quot; = 216,
+                      &quot;GET_DAQ_EVENT_INFO&quot; = 215,
+                      &quot;FREE_DAQ&quot; = 214,
+                      &quot;ALLOC_DAQ&quot; = 213,
+                      &quot;ALLOC_ODT&quot; = 212,
+                      &quot;ALLOC_ODT_ENTRY&quot; = 211,
+                      &quot;PROGRAM_START&quot; = 210,
+                      &quot;PROGRAM_CLEAR&quot; = 209,
+                      &quot;PROGRAM&quot; = 208,
+                      &quot;PROGRAM_RESET&quot; = 207,
+                      &quot;GET_PGM_PROCESSOR_INFO&quot; = 206,
+                      &quot;GET_SECTOR_INFO&quot; = 205,
+                      &quot;PROGRAM_PREPARE&quot; = 204,
+                      &quot;PROGRAM_FORMAT&quot; = 203,
+                      &quot;PROGRAM_NEXT&quot; = 202,
+                      &quot;PROGRAM_MAX&quot; = 201,
+                      &quot;PROGRAM_VERIFY&quot; = 200
+                    })*;
+                    &quot;COMMUNICATION_MODE_SUPPORTED&quot; taggedunion {
+                      &quot;BLOCK&quot; taggedstruct {
+                        &quot;SLAVE&quot; ;
+                        &quot;MASTER&quot; struct {
+                          uchar;
+                          uchar;
+                        };
+                      };
+                      &quot;INTERLEAVED&quot; uchar;
+                    };
+                    &quot;SEED_AND_KEY_EXTERNAL_FUNCTION&quot; char[256];
+                  };
+                };
+                block &quot;SEGMENT&quot; struct {
+                  uchar;
+                  uchar;
+                  uchar;
+                  uchar;
+                  uchar;
+                  taggedstruct {
+                    block &quot;CHECKSUM&quot; struct {
+                      enum {
+                        &quot;XCP_ADD_11&quot; = 1,
+                        &quot;XCP_ADD_12&quot; = 2,
+                        &quot;XCP_ADD_14&quot; = 3,
+                        &quot;XCP_ADD_22&quot; = 4,
+                        &quot;XCP_ADD_24&quot; = 5,
+                        &quot;XCP_ADD_44&quot; = 6,
+                        &quot;XCP_CRC_16&quot; = 7,
+                        &quot;XCP_CRC_16_CITT&quot; = 8,
+                        &quot;XCP_CRC_32&quot; = 9,
+                        &quot;XCP_USER_DEFINED&quot; = 255
+                      };
+                      taggedstruct {
+                        &quot;MAX_BLOCK_SIZE&quot; ulong;
+                        &quot;EXTERNAL_FUNCTION&quot; char[256];
+                      };
+                    };
+                    (block &quot;PAGE&quot; struct {
+                      uchar;
+                      enum {
+                        &quot;ECU_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;ECU_ACCESS_WITHOUT_XCP_ONLY&quot; = 1,
+                        &quot;ECU_ACCESS_WITH_XCP_ONLY&quot; = 2,
+                        &quot;ECU_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      enum {
+                        &quot;XCP_READ_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;XCP_READ_ACCESS_WITHOUT_ECU_ONLY&quot; = 1,
+                        &quot;XCP_READ_ACCESS_WITH_ECU_ONLY&quot; = 2,
+                        &quot;XCP_READ_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      enum {
+                        &quot;XCP_WRITE_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;XCP_WRITE_ACCESS_WITHOUT_ECU_ONLY&quot; = 1,
+                        &quot;XCP_WRITE_ACCESS_WITH_ECU_ONLY&quot; = 2,
+                        &quot;XCP_WRITE_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      taggedstruct {
+                        &quot;INIT_SEGMENT&quot; uchar;
+                      };
+                    })*;
+                    (block &quot;ADDRESS_MAPPING&quot; struct {
+                      ulong;
+                      ulong;
+                      ulong;
+                    })*;
+                    &quot;PGM_VERIFY&quot; ulong;
+                  };
+                };
+                block &quot;DAQ&quot; struct {
+                  enum {
+                    &quot;STATIC&quot; = 0,
+                    &quot;DYNAMIC&quot; = 1
+                  };
+                  uint;
+                  uint;
+                  uchar;
+                  enum {
+                    &quot;OPTIMISATION_TYPE_DEFAULT&quot; = 0,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_16&quot; = 1,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_32&quot; = 2,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_64&quot; = 3,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_ALIGNMENT&quot; = 4,
+                    &quot;OPTIMISATION_TYPE_MAX_ENTRY_SIZE&quot; = 5
+                  };
+                  enum {
+                    &quot;ADDRESS_EXTENSION_FREE&quot; = 0,
+                    &quot;ADDRESS_EXTENSION_ODT&quot; = 1,
+                    &quot;ADDRESS_EXTENSION_DAQ&quot; = 3
+                  };
+                  enum {
+                    &quot;IDENTIFICATION_FIELD_TYPE_ABSOLUTE&quot; = 0,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_BYTE&quot; = 1,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD&quot; = 2,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD_ALIGNED&quot; = 3
+                  };
+                  enum {
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_BYTE&quot; = 1,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_WORD&quot; = 2,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_DWORD&quot; = 4,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_DLONG&quot; = 8
+                  };
+                  uchar;
+                  enum {
+                    &quot;NO_OVERLOAD_INDICATION&quot; = 0,
+                    &quot;OVERLOAD_INDICATION_PID&quot; = 1,
+                    &quot;OVERLOAD_INDICATION_EVENT&quot; = 2
+                  };
+                  taggedstruct {
+                    &quot;PRESCALER_SUPPORTED&quot; ;
+                    &quot;RESUME_SUPPORTED&quot; ;
+                    block &quot;STIM&quot; struct {
+                      enum {
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_BYTE&quot; = 1,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_WORD&quot; = 2,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_DWORD&quot; = 4,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_DLONG&quot; = 8
+                      };
+                      uchar;
+                      taggedstruct {
+                        &quot;BIT_STIM_SUPPORTED&quot; ;
+                      };
+                    };
+                    block &quot;TIMESTAMP_SUPPORTED&quot; struct {
+                      uint;
+                      enum {
+                        &quot;NO_TIME_STAMP&quot; = 0,
+                        &quot;SIZE_BYTE&quot; = 1,
+                        &quot;SIZE_WORD&quot; = 2,
+                        &quot;SIZE_DWORD&quot; = 4
+                      };
+                      enum {
+                        &quot;UNIT_1NS&quot; = 0,
+                        &quot;UNIT_10NS&quot; = 1,
+                        &quot;UNIT_100NS&quot; = 2,
+                        &quot;UNIT_1US&quot; = 3,
+                        &quot;UNIT_10US&quot; = 4,
+                        &quot;UNIT_100US&quot; = 5,
+                        &quot;UNIT_1MS&quot; = 6,
+                        &quot;UNIT_10MS&quot; = 7,
+                        &quot;UNIT_100MS&quot; = 8,
+                        &quot;UNIT_1S&quot; = 9
+                      };
+                      taggedstruct {
+                        &quot;TIMESTAMP_FIXED&quot; ;
+                      };
+                    };
+                    &quot;PID_OFF_SUPPORTED&quot; ;
+                    (block &quot;DAQ_LIST&quot; struct {
+                      uint;
+                      taggedstruct {
+                        &quot;DAQ_LIST_TYPE&quot; enum {
+                          &quot;DAQ&quot; = 1,
+                          &quot;STIM&quot; = 2,
+                          &quot;DAQ_STIM&quot; = 3
+                        };
+                        &quot;MAX_ODT&quot; uchar;
+                        &quot;MAX_ODT_ENTRIES&quot; uchar;
+                        &quot;FIRST_PID&quot; uchar;
+                        &quot;EVENT_FIXED&quot; uint;
+                        block &quot;PREDEFINED&quot; taggedstruct {
+                          (block &quot;ODT&quot; struct {
+                            uchar;
+                            taggedstruct {
+                              (&quot;ODT_ENTRY&quot; struct {
+                                uchar;
+                                ulong;
+                                uchar;
+                                uchar;
+                                uchar;
+                              })*;
+                            };
+                          })*;
+                        };
+                      };
+                    })*;
+                    (block &quot;EVENT&quot; struct {
+                      char[101];
+                      char[9];
+                      uint;
+                      enum {
+                        &quot;DAQ&quot; = 1,
+                        &quot;STIM&quot; = 2,
+                        &quot;DAQ_STIM&quot; = 3
+                      };
+                      uchar;
+                      uchar;
+                      uchar;
+                      uchar;
+                    })*;
+                  };
+                };
+                block &quot;PAG&quot; struct {
+                  uchar;
+                  taggedstruct {
+                    &quot;FREEZE_SUPPORTED&quot; ;
+                  };
+                };
+                block &quot;PGM&quot; struct {
+                  enum {
+                    &quot;PGM_MODE_ABSOLUTE&quot; = 1,
+                    &quot;PGM_MODE_FUNCTIONAL&quot; = 2,
+                    &quot;PGM_MODE_ABSOLUTE_AND_FUNCTIONAL&quot; = 3
+                  };
+                  uchar;
+                  uchar;
+                  taggedstruct {
+                    (block &quot;SECTOR&quot; struct {
+                      char[101];
+                      uchar;
+                      ulong;
+                      ulong;
+                      uchar;
+                      uchar;
+                      uchar;
+                    })*;
+                    &quot;COMMUNICATION_MODE_SUPPORTED&quot; taggedunion {
+                      &quot;BLOCK&quot; taggedstruct {
+                        &quot;SLAVE&quot; ;
+                        &quot;MASTER&quot; struct {
+                          uchar;
+                          uchar;
+                        };
+                      };
+                      &quot;INTERLEAVED&quot; uchar;
+                    };
+                  };
+                };
+                block &quot;DAQ_EVENT&quot; taggedunion {
+                  &quot;FIXED_EVENT_LIST&quot; taggedstruct {
+                    (&quot;EVENT&quot; uint)*;
+                  };
+                  &quot;VARIABLE&quot; taggedstruct {
+                    block &quot;AVAILABLE_EVENT_LIST&quot; taggedstruct {
+                      (&quot;EVENT&quot; uint)*;
+                    };
+                    block &quot;DEFAULT_EVENT_LIST&quot; taggedstruct {
+                      (&quot;EVENT&quot; uint)*;
+                    };
+                  };
+                };
+              };
+            };
+            block &quot;XCP_ON_USB&quot; struct {
+              uint;
+              uint;
+              uint;
+              uchar;
+              enum {
+                &quot;HEADER_LEN_BYTE&quot; = 0,
+                &quot;HEADER_LEN_CTR_BYTE&quot; = 1,
+                &quot;HEADER_LEN_FILL_BYTE&quot; = 2,
+                &quot;HEADER_LEN_WORD&quot; = 3,
+                &quot;HEADER_LEN_CTR_WORD&quot; = 4,
+                &quot;HEADER_LEN_FILL_WORD&quot; = 5
+              };
+              taggedunion {
+                block &quot;OUT_EP_CMD_STIM&quot; struct {
+                  uchar;
+                  enum {
+                    &quot;BULK_TRANSFER&quot; = 2,
+                    &quot;INTERRUPT_TRANSFER&quot; = 3
+                  };
+                  uint;
+                  uchar;
+                  enum {
+                    &quot;MESSAGE_PACKING_SINGLE&quot; = 0,
+                    &quot;MESSAGE_PACKING_MULTIPLE&quot; = 1,
+                    &quot;MESSAGE_PACKING_STREAMING&quot; = 2
+                  };
+                  enum {
+                    &quot;ALIGNMENT_8_BIT&quot; = 0,
+                    &quot;ALIGNMENT_16_BIT&quot; = 1,
+                    &quot;ALIGNMENT_32_BIT&quot; = 2,
+                    &quot;ALIGNMENT_64_BIT&quot; = 3
+                  };
+                  taggedstruct {
+                    &quot;RECOMMENDED_HOST_BUFSIZE&quot; uint;
+                  };
+                };
+              };
+              taggedunion {
+                block &quot;IN_EP_RESERR_DAQ_EVSERV&quot; struct {
+                  uchar;
+                  enum {
+                    &quot;BULK_TRANSFER&quot; = 2,
+                    &quot;INTERRUPT_TRANSFER&quot; = 3
+                  };
+                  uint;
+                  uchar;
+                  enum {
+                    &quot;MESSAGE_PACKING_SINGLE&quot; = 0,
+                    &quot;MESSAGE_PACKING_MULTIPLE&quot; = 1,
+                    &quot;MESSAGE_PACKING_STREAMING&quot; = 2
+                  };
+                  enum {
+                    &quot;ALIGNMENT_8_BIT&quot; = 0,
+                    &quot;ALIGNMENT_16_BIT&quot; = 1,
+                    &quot;ALIGNMENT_32_BIT&quot; = 2,
+                    &quot;ALIGNMENT_64_BIT&quot; = 3
+                  };
+                  taggedstruct {
+                    &quot;RECOMMENDED_HOST_BUFSIZE&quot; uint;
+                  };
+                };
+              };
+              taggedstruct {
+                &quot;ALTERNATE_SETTING_NO&quot; uchar;
+                &quot;INTERFACE_STRING_DESCRIPTOR&quot; char[101];
+                (block &quot;OUT_EP_ONLY_STIM&quot; struct {
+                  uchar;
+                  enum {
+                    &quot;BULK_TRANSFER&quot; = 2,
+                    &quot;INTERRUPT_TRANSFER&quot; = 3
+                  };
+                  uint;
+                  uchar;
+                  enum {
+                    &quot;MESSAGE_PACKING_SINGLE&quot; = 0,
+                    &quot;MESSAGE_PACKING_MULTIPLE&quot; = 1,
+                    &quot;MESSAGE_PACKING_STREAMING&quot; = 2
+                  };
+                  enum {
+                    &quot;ALIGNMENT_8_BIT&quot; = 0,
+                    &quot;ALIGNMENT_16_BIT&quot; = 1,
+                    &quot;ALIGNMENT_32_BIT&quot; = 2,
+                    &quot;ALIGNMENT_64_BIT&quot; = 3
+                  };
+                  taggedstruct {
+                    &quot;RECOMMENDED_HOST_BUFSIZE&quot; uint;
+                  };
+                })*;
+                (block &quot;IN_EP_ONLY_DAQ&quot; struct {
+                  uchar;
+                  enum {
+                    &quot;BULK_TRANSFER&quot; = 2,
+                    &quot;INTERRUPT_TRANSFER&quot; = 3
+                  };
+                  uint;
+                  uchar;
+                  enum {
+                    &quot;MESSAGE_PACKING_SINGLE&quot; = 0,
+                    &quot;MESSAGE_PACKING_MULTIPLE&quot; = 1,
+                    &quot;MESSAGE_PACKING_STREAMING&quot; = 2
+                  };
+                  enum {
+                    &quot;ALIGNMENT_8_BIT&quot; = 0,
+                    &quot;ALIGNMENT_16_BIT&quot; = 1,
+                    &quot;ALIGNMENT_32_BIT&quot; = 2,
+                    &quot;ALIGNMENT_64_BIT&quot; = 3
+                  };
+                  taggedstruct {
+                    &quot;RECOMMENDED_HOST_BUFSIZE&quot; uint;
+                  };
+                })*;
+                block &quot;IN_EP_ONLY_EVSERV&quot; struct {
+                  uchar;
+                  enum {
+                    &quot;BULK_TRANSFER&quot; = 2,
+                    &quot;INTERRUPT_TRANSFER&quot; = 3
+                  };
+                  uint;
+                  uchar;
+                  enum {
+                    &quot;MESSAGE_PACKING_SINGLE&quot; = 0,
+                    &quot;MESSAGE_PACKING_MULTIPLE&quot; = 1,
+                    &quot;MESSAGE_PACKING_STREAMING&quot; = 2
+                  };
+                  enum {
+                    &quot;ALIGNMENT_8_BIT&quot; = 0,
+                    &quot;ALIGNMENT_16_BIT&quot; = 1,
+                    &quot;ALIGNMENT_32_BIT&quot; = 2,
+                    &quot;ALIGNMENT_64_BIT&quot; = 3
+                  };
+                  taggedstruct {
+                    &quot;RECOMMENDED_HOST_BUFSIZE&quot; uint;
+                  };
+                };
+                (block &quot;DAQ_LIST_USB_ENDPOINT&quot; struct {
+                  uint;
+                  taggedstruct {
+                    &quot;FIXED_IN&quot; uchar;
+                    &quot;FIXED_OUT&quot; uchar;
+                  };
+                })*;
+                block &quot;PROTOCOL_LAYER&quot; struct {
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uint;
+                  uchar;
+                  uint;
+                  enum {
+                    &quot;BYTE_ORDER_MSB_LAST&quot; = 0,
+                    &quot;BYTE_ORDER_MSB_FIRST&quot; = 1
+                  };
+                  enum {
+                    &quot;ADDRESS_GRANULARITY_BYTE&quot; = 1,
+                    &quot;ADDRESS_GRANULARITY_WORD&quot; = 2,
+                    &quot;ADDRESS_GRANULARITY_DWORD&quot; = 4
+                  };
+                  taggedstruct {
+                    (&quot;OPTIONAL_CMD&quot; enum {
+                      &quot;GET_COMM_MODE_INFO&quot; = 251,
+                      &quot;GET_ID&quot; = 250,
+                      &quot;SET_REQUEST&quot; = 249,
+                      &quot;GET_SEED&quot; = 248,
+                      &quot;UNLOCK&quot; = 247,
+                      &quot;SET_MTA&quot; = 246,
+                      &quot;UPLOAD&quot; = 245,
+                      &quot;SHORT_UPLOAD&quot; = 244,
+                      &quot;BUILD_CHECKSUM&quot; = 243,
+                      &quot;TRANSPORT_LAYER_CMD&quot; = 242,
+                      &quot;USER_CMD&quot; = 241,
+                      &quot;DOWNLOAD&quot; = 240,
+                      &quot;DOWNLOAD_NEXT&quot; = 239,
+                      &quot;DOWNLOAD_MAX&quot; = 238,
+                      &quot;SHORT_DOWNLOAD&quot; = 237,
+                      &quot;MODIFY_BITS&quot; = 236,
+                      &quot;SET_CAL_PAGE&quot; = 235,
+                      &quot;GET_CAL_PAGE&quot; = 234,
+                      &quot;GET_PAG_PROCESSOR_INFO&quot; = 233,
+                      &quot;GET_SEGMENT_INFO&quot; = 232,
+                      &quot;GET_PAGE_INFO&quot; = 231,
+                      &quot;SET_SEGMENT_MODE&quot; = 230,
+                      &quot;GET_SEGMENT_MODE&quot; = 229,
+                      &quot;COPY_CAL_PAGE&quot; = 228,
+                      &quot;CLEAR_DAQ_LIST&quot; = 227,
+                      &quot;SET_DAQ_PTR&quot; = 226,
+                      &quot;WRITE_DAQ&quot; = 225,
+                      &quot;SET_DAQ_LIST_MODE&quot; = 224,
+                      &quot;GET_DAQ_LIST_MODE&quot; = 223,
+                      &quot;START_STOP_DAQ_LIST&quot; = 222,
+                      &quot;START_STOP_SYNCH&quot; = 221,
+                      &quot;GET_DAQ_CLOCK&quot; = 220,
+                      &quot;READ_DAQ&quot; = 219,
+                      &quot;GET_DAQ_PROCESSOR_INFO&quot; = 218,
+                      &quot;GET_DAQ_RESOLUTION_INFO&quot; = 217,
+                      &quot;GET_DAQ_LIST_INFO&quot; = 216,
+                      &quot;GET_DAQ_EVENT_INFO&quot; = 215,
+                      &quot;FREE_DAQ&quot; = 214,
+                      &quot;ALLOC_DAQ&quot; = 213,
+                      &quot;ALLOC_ODT&quot; = 212,
+                      &quot;ALLOC_ODT_ENTRY&quot; = 211,
+                      &quot;PROGRAM_START&quot; = 210,
+                      &quot;PROGRAM_CLEAR&quot; = 209,
+                      &quot;PROGRAM&quot; = 208,
+                      &quot;PROGRAM_RESET&quot; = 207,
+                      &quot;GET_PGM_PROCESSOR_INFO&quot; = 206,
+                      &quot;GET_SECTOR_INFO&quot; = 205,
+                      &quot;PROGRAM_PREPARE&quot; = 204,
+                      &quot;PROGRAM_FORMAT&quot; = 203,
+                      &quot;PROGRAM_NEXT&quot; = 202,
+                      &quot;PROGRAM_MAX&quot; = 201,
+                      &quot;PROGRAM_VERIFY&quot; = 200
+                    })*;
+                    &quot;COMMUNICATION_MODE_SUPPORTED&quot; taggedunion {
+                      &quot;BLOCK&quot; taggedstruct {
+                        &quot;SLAVE&quot; ;
+                        &quot;MASTER&quot; struct {
+                          uchar;
+                          uchar;
+                        };
+                      };
+                      &quot;INTERLEAVED&quot; uchar;
+                    };
+                    &quot;SEED_AND_KEY_EXTERNAL_FUNCTION&quot; char[256];
+                  };
+                };
+                block &quot;SEGMENT&quot; struct {
+                  uchar;
+                  uchar;
+                  uchar;
+                  uchar;
+                  uchar;
+                  taggedstruct {
+                    block &quot;CHECKSUM&quot; struct {
+                      enum {
+                        &quot;XCP_ADD_11&quot; = 1,
+                        &quot;XCP_ADD_12&quot; = 2,
+                        &quot;XCP_ADD_14&quot; = 3,
+                        &quot;XCP_ADD_22&quot; = 4,
+                        &quot;XCP_ADD_24&quot; = 5,
+                        &quot;XCP_ADD_44&quot; = 6,
+                        &quot;XCP_CRC_16&quot; = 7,
+                        &quot;XCP_CRC_16_CITT&quot; = 8,
+                        &quot;XCP_CRC_32&quot; = 9,
+                        &quot;XCP_USER_DEFINED&quot; = 255
+                      };
+                      taggedstruct {
+                        &quot;MAX_BLOCK_SIZE&quot; ulong;
+                        &quot;EXTERNAL_FUNCTION&quot; char[256];
+                      };
+                    };
+                    (block &quot;PAGE&quot; struct {
+                      uchar;
+                      enum {
+                        &quot;ECU_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;ECU_ACCESS_WITHOUT_XCP_ONLY&quot; = 1,
+                        &quot;ECU_ACCESS_WITH_XCP_ONLY&quot; = 2,
+                        &quot;ECU_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      enum {
+                        &quot;XCP_READ_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;XCP_READ_ACCESS_WITHOUT_ECU_ONLY&quot; = 1,
+                        &quot;XCP_READ_ACCESS_WITH_ECU_ONLY&quot; = 2,
+                        &quot;XCP_READ_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      enum {
+                        &quot;XCP_WRITE_ACCESS_NOT_ALLOWED&quot; = 0,
+                        &quot;XCP_WRITE_ACCESS_WITHOUT_ECU_ONLY&quot; = 1,
+                        &quot;XCP_WRITE_ACCESS_WITH_ECU_ONLY&quot; = 2,
+                        &quot;XCP_WRITE_ACCESS_DONT_CARE&quot; = 3
+                      };
+                      taggedstruct {
+                        &quot;INIT_SEGMENT&quot; uchar;
+                      };
+                    })*;
+                    (block &quot;ADDRESS_MAPPING&quot; struct {
+                      ulong;
+                      ulong;
+                      ulong;
+                    })*;
+                    &quot;PGM_VERIFY&quot; ulong;
+                  };
+                };
+                block &quot;DAQ&quot; struct {
+                  enum {
+                    &quot;STATIC&quot; = 0,
+                    &quot;DYNAMIC&quot; = 1
+                  };
+                  uint;
+                  uint;
+                  uchar;
+                  enum {
+                    &quot;OPTIMISATION_TYPE_DEFAULT&quot; = 0,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_16&quot; = 1,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_32&quot; = 2,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_64&quot; = 3,
+                    &quot;OPTIMISATION_TYPE_ODT_TYPE_ALIGNMENT&quot; = 4,
+                    &quot;OPTIMISATION_TYPE_MAX_ENTRY_SIZE&quot; = 5
+                  };
+                  enum {
+                    &quot;ADDRESS_EXTENSION_FREE&quot; = 0,
+                    &quot;ADDRESS_EXTENSION_ODT&quot; = 1,
+                    &quot;ADDRESS_EXTENSION_DAQ&quot; = 3
+                  };
+                  enum {
+                    &quot;IDENTIFICATION_FIELD_TYPE_ABSOLUTE&quot; = 0,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_BYTE&quot; = 1,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD&quot; = 2,
+                    &quot;IDENTIFICATION_FIELD_TYPE_RELATIVE_WORD_ALIGNED&quot; = 3
+                  };
+                  enum {
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_BYTE&quot; = 1,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_WORD&quot; = 2,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_DWORD&quot; = 4,
+                    &quot;GRANULARITY_ODT_ENTRY_SIZE_DAQ_DLONG&quot; = 8
+                  };
+                  uchar;
+                  enum {
+                    &quot;NO_OVERLOAD_INDICATION&quot; = 0,
+                    &quot;OVERLOAD_INDICATION_PID&quot; = 1,
+                    &quot;OVERLOAD_INDICATION_EVENT&quot; = 2
+                  };
+                  taggedstruct {
+                    &quot;PRESCALER_SUPPORTED&quot; ;
+                    &quot;RESUME_SUPPORTED&quot; ;
+                    block &quot;STIM&quot; struct {
+                      enum {
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_BYTE&quot; = 1,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_WORD&quot; = 2,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_DWORD&quot; = 4,
+                        &quot;GRANULARITY_ODT_ENTRY_SIZE_STIM_DLONG&quot; = 8
+                      };
+                      uchar;
+                      taggedstruct {
+                        &quot;BIT_STIM_SUPPORTED&quot; ;
+                      };
+                    };
+                    block &quot;TIMESTAMP_SUPPORTED&quot; struct {
+                      uint;
+                      enum {
+                        &quot;NO_TIME_STAMP&quot; = 0,
+                        &quot;SIZE_BYTE&quot; = 1,
+                        &quot;SIZE_WORD&quot; = 2,
+                        &quot;SIZE_DWORD&quot; = 4
+                      };
+                      enum {
+                        &quot;UNIT_1NS&quot; = 0,
+                        &quot;UNIT_10NS&quot; = 1,
+                        &quot;UNIT_100NS&quot; = 2,
+                        &quot;UNIT_1US&quot; = 3,
+                        &quot;UNIT_10US&quot; = 4,
+                        &quot;UNIT_100US&quot; = 5,
+                        &quot;UNIT_1MS&quot; = 6,
+                        &quot;UNIT_10MS&quot; = 7,
+                        &quot;UNIT_100MS&quot; = 8,
+                        &quot;UNIT_1S&quot; = 9
+                      };
+                      taggedstruct {
+                        &quot;TIMESTAMP_FIXED&quot; ;
+                      };
+                    };
+                    &quot;PID_OFF_SUPPORTED&quot; ;
+                    (block &quot;DAQ_LIST&quot; struct {
+                      uint;
+                      taggedstruct {
+                        &quot;DAQ_LIST_TYPE&quot; enum {
+                          &quot;DAQ&quot; = 1,
+                          &quot;STIM&quot; = 2,
+                          &quot;DAQ_STIM&quot; = 3
+                        };
+                        &quot;MAX_ODT&quot; uchar;
+                        &quot;MAX_ODT_ENTRIES&quot; uchar;
+                        &quot;FIRST_PID&quot; uchar;
+                        &quot;EVENT_FIXED&quot; uint;
+                        block &quot;PREDEFINED&quot; taggedstruct {
+                          (block &quot;ODT&quot; struct {
+                            uchar;
+                            taggedstruct {
+                              (&quot;ODT_ENTRY&quot; struct {
+                                uchar;
+                                ulong;
+                                uchar;
+                                uchar;
+                                uchar;
+                              })*;
+                            };
+                          })*;
+                        };
+                      };
+                    })*;
+                    (block &quot;EVENT&quot; struct {
+                      char[101];
+                      char[9];
+                      uint;
+                      enum {
+                        &quot;DAQ&quot; = 1,
+                        &quot;STIM&quot; = 2,
+                        &quot;DAQ_STIM&quot; = 3
+                      };
+                      uchar;
+                      uchar;
+                      uchar;
+                      uchar;
+                    })*;
+                  };
+                };
+                block &quot;PAG&quot; struct {
+                  uchar;
+                  taggedstruct {
+                    &quot;FREEZE_SUPPORTED&quot; ;
+                  };
+                };
+                block &quot;PGM&quot; struct {
+                  enum {
+                    &quot;PGM_MODE_ABSOLUTE&quot; = 1,
+                    &quot;PGM_MODE_FUNCTIONAL&quot; = 2,
+                    &quot;PGM_MODE_ABSOLUTE_AND_FUNCTIONAL&quot; = 3
+                  };
+                  uchar;
+                  uchar;
+                  taggedstruct {
+                    (block &quot;SECTOR&quot; struct {
+                      char[101];
+                      uchar;
+                      ulong;
+                      ulong;
+                      uchar;
+                      uchar;
+                      uchar;
+                    })*;
+                    &quot;COMMUNICATION_MODE_SUPPORTED&quot; taggedunion {
+                      &quot;BLOCK&quot; taggedstruct {
+                        &quot;SLAVE&quot; ;
+                        &quot;MASTER&quot; struct {
+                          uchar;
+                          uchar;
+                        };
+                      };
+                      &quot;INTERLEAVED&quot; uchar;
+                    };
+                  };
+                };
+                block &quot;DAQ_EVENT&quot; taggedunion {
+                  &quot;FIXED_EVENT_LIST&quot; taggedstruct {
+                    (&quot;EVENT&quot; uint)*;
+                  };
+                  &quot;VARIABLE&quot; taggedstruct {
+                    block &quot;AVAILABLE_EVENT_LIST&quot; taggedstruct {
+                      (&quot;EVENT&quot; uint)*;
+                    };
+                    block &quot;DEFAULT_EVENT_LIST&quot; taggedstruct {
+                      (&quot;EVENT&quot; uint)*;
+                    };
+                  };
+                };
+              };
+            };
+          };
+        };
+
+
+      };
+    </A2ML>
+
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  Common parameters valid for the whole ASAP2 file                                                */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+
+    <MOD_COMMON property="&quot;&quot;">
+      DEPOSIT ABSOLUTE
+      BYTE_ORDER MSB_LAST
+      ALIGNMENT_BYTE 1
+      ALIGNMENT_WORD 2
+      ALIGNMENT_LONG 4
+      ALIGNMENT_FLOAT32_IEEE 4
+      ALIGNMENT_FLOAT64_IEEE 4
+    </MOD_COMMON>
+
+    
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  XCP Interface description                                                                       */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+
+    <IF_DATA property="XCP">
+      <PROTOCOL_LAYER>
+        0x100 0x20 0x20 0x20 0x20 0x20 0x20 0x20 0x8 0x8 BYTE_ORDER_MSB_LAST ADDRESS_GRANULARITY_BYTE 
+        OPTIONAL_CMD SET_REQUEST 
+        OPTIONAL_CMD GET_SEED 
+        OPTIONAL_CMD UNLOCK 
+        OPTIONAL_CMD SET_MTA 
+        OPTIONAL_CMD SHORT_DOWNLOAD 
+        OPTIONAL_CMD PROGRAM_START 
+        OPTIONAL_CMD PROGRAM_CLEAR 
+        OPTIONAL_CMD PROGRAM 
+        OPTIONAL_CMD PROGRAM_RESET 
+        OPTIONAL_CMD GET_PGM_PROCESSOR_INFO 
+        OPTIONAL_CMD GET_SECTOR_INFO 
+        OPTIONAL_CMD PROGRAM_PREPARE 
+        OPTIONAL_CMD PROGRAM_NEXT 
+        OPTIONAL_CMD PROGRAM_MAX 
+        OPTIONAL_CMD PROGRAM_VERIFY 
+        OPTIONAL_CMD TRANSPORT_LAYER_CMD 
+        OPTIONAL_CMD GET_ID 
+        OPTIONAL_CMD UPLOAD 
+        OPTIONAL_CMD SHORT_UPLOAD 
+        OPTIONAL_CMD BUILD_CHECKSUM 
+        OPTIONAL_CMD DOWNLOAD_NEXT 
+        OPTIONAL_CMD SET_CAL_PAGE 
+        OPTIONAL_CMD GET_CAL_PAGE 
+        OPTIONAL_CMD CLEAR_DAQ_LIST 
+        OPTIONAL_CMD SET_DAQ_PTR 
+        OPTIONAL_CMD WRITE_DAQ 
+        OPTIONAL_CMD SET_DAQ_LIST_MODE 
+        OPTIONAL_CMD GET_DAQ_LIST_MODE 
+        OPTIONAL_CMD START_STOP_DAQ_LIST 
+        OPTIONAL_CMD FREE_DAQ 
+        OPTIONAL_CMD ALLOC_DAQ 
+        OPTIONAL_CMD ALLOC_ODT 
+        OPTIONAL_CMD ALLOC_ODT_ENTRY 
+        OPTIONAL_CMD START_STOP_SYNCH 
+        OPTIONAL_CMD DOWNLOAD 
+        OPTIONAL_CMD MODIFY_BITS 
+        OPTIONAL_CMD GET_PAG_PROCESSOR_INFO 
+        OPTIONAL_CMD GET_SEGMENT_INFO 
+        OPTIONAL_CMD GET_PAGE_INFO 
+        OPTIONAL_CMD SET_SEGMENT_MODE 
+        OPTIONAL_CMD GET_SEGMENT_MODE 
+        OPTIONAL_CMD COPY_CAL_PAGE 
+        OPTIONAL_CMD GET_DAQ_CLOCK 
+        OPTIONAL_CMD READ_DAQ 
+        OPTIONAL_CMD GET_DAQ_LIST_MODE 
+        OPTIONAL_CMD DOWNLOAD_MAX 
+        COMMUNICATION_MODE_SUPPORTED 
+          BLOCK 
+            SLAVE 
+            MASTER 0x14 0x5 
+      </PROTOCOL_LAYER>
+      <DAQ>
+        STATIC 0x3 0x2 0x0 OPTIMISATION_TYPE_DEFAULT ADDRESS_EXTENSION_DAQ IDENTIFICATION_FIELD_TYPE_ABSOLUTE GRANULARITY_ODT_ENTRY_SIZE_DAQ_BYTE 0x4 OVERLOAD_INDICATION_EVENT 
+        PRESCALER_SUPPORTED 
+        <TIMESTAMP_SUPPORTED>
+          0x1 SIZE_DWORD UNIT_1US 
+        </TIMESTAMP_SUPPORTED>
+        <DAQ_LIST>
+          0x0 
+          DAQ_LIST_TYPE DAQ 
+          MAX_ODT 0x5 
+          MAX_ODT_ENTRIES 0x7 
+        </DAQ_LIST>
+        <DAQ_LIST>
+          0x1 
+          DAQ_LIST_TYPE DAQ 
+          MAX_ODT 0x4 
+          MAX_ODT_ENTRIES 0x7 
+        </DAQ_LIST>
+        <DAQ_LIST>
+          0x2 
+          DAQ_LIST_TYPE DAQ 
+          MAX_ODT 0x3 
+          MAX_ODT_ENTRIES 0x7 
+        </DAQ_LIST>
+        <EVENT>
+          &quot;5ms&quot; &quot;5ms&quot; 0x0 DAQ 0xFF 0x5 0x6 0xFF 
+        </EVENT>
+        <EVENT>
+          &quot;extEvent&quot; &quot;extEvent&quot; 0x1 DAQ 0xFF 0x1 0x9 0xFF 
+        </EVENT>
+      </DAQ>
+      <XCP_ON_CAN>
+        0x100 
+        CAN_ID_BROADCAST 0x52 
+        CAN_ID_MASTER 0x51 
+        CAN_ID_SLAVE 0x50 
+        BAUDRATE 0x7A120 
+      </XCP_ON_CAN>
+    </IF_DATA>
+ 
+
+ 
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  MOD_PAR with the memory segment descriptions                                                    */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+
+    <MOD_PAR property="&quot;&quot;">
+      NO_OF_INTERFACES 1
+      
+      <MEMORY_SEGMENT property="ECU_Code">
+        &quot;Memory segment for code part of the ECU&quot; 
+        DATA FLASH EXTERN 0x16000 0x86C -1 -1 -1 -1 -1 
+        <IF_DATA property="XCP">
+          <SEGMENT>
+            0x0 0x2 0x0 0x0 0x0 
+            <PAGE>
+              0x0 ECU_ACCESS_DONT_CARE XCP_READ_ACCESS_WITH_ECU_ONLY XCP_WRITE_ACCESS_NOT_ALLOWED 
+            </PAGE>
+            <PAGE>
+              0x1 ECU_ACCESS_DONT_CARE XCP_READ_ACCESS_WITH_ECU_ONLY XCP_WRITE_ACCESS_WITH_ECU_ONLY 
+            </PAGE>
+          </SEGMENT>
+        </IF_DATA>
+      </MEMORY_SEGMENT>
+
+      <MEMORY_SEGMENT property="ECU_Data">
+        &quot;Memory segment for parameters&quot; 
+        DATA FLASH EXTERN 0x810000 0x10000 -1 -1 -1 -1 -1 
+      </MEMORY_SEGMENT>
+
+      SYSTEM_CONSTANT &quot;System_Constant_1&quot; &quot;-3.45&quot;
+      SYSTEM_CONSTANT &quot;System_Constant_2&quot; &quot;5.67&quot;
+      SYSTEM_CONSTANT &quot;System_Constant_3&quot; &quot;Text in System Constant&quot;
+
+    </MOD_PAR>
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  Computation Methods used to convert the ECU internal values to the physical values              */
+/*                                                                                                  */
+/*  the types IDENTICAL, LINEAR and RAT_FUNC should be used as standard                             */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+
+    <COMPU_METHOD property="CM.IDENTICAL">
+      &quot;conversion that delivers always phys = int&quot;
+      IDENTICAL &quot;%3.0&quot; &quot;hours&quot;
+    </COMPU_METHOD>
+
+    <COMPU_METHOD property="CM.LINEAR.IDENT">
+      &quot;Linear function with parameter set for phys = f(int) = 1*int + 0&quot;
+      LINEAR &quot;%3.1&quot; &quot;m/s&quot;
+      COEFFS_LINEAR 1 0
+    </COMPU_METHOD>
+
+    <COMPU_METHOD property="CM.LINEAR.MUL_2">
+      &quot;Linear function with parameter set for phys = f(int) = 2*int + 0&quot;
+      LINEAR &quot;%3.1&quot; &quot;m/s&quot;
+      COEFFS_LINEAR 2 0
+    </COMPU_METHOD>
+
+    <COMPU_METHOD property="CM.RAT_FUNC.IDENT">
+      &quot;rational function with parameter set for int = f(phys) = phys&quot;
+      RAT_FUNC &quot;%3.1&quot; &quot;m/s&quot;
+      COEFFS 0 1 0 0 0 1
+    </COMPU_METHOD>
+
+    <COMPU_METHOD property="CM.RAT_FUNC.DIV_10">
+      &quot;rational function with parameter set for impl = f(phys) = phys * 10&quot;
+      RAT_FUNC &quot;%3.1&quot; &quot;km/h&quot;
+      COEFFS 0 10 0 0 0 1
+    </COMPU_METHOD>
+
+    <COMPU_METHOD property="CM.RAT_FUNC.DIV_81_9175">
+      &quot;rational function with parameter set for impl = f(phys) = phys * 81.9175&quot;
+      RAT_FUNC &quot;%8.4&quot; &quot;grad C&quot;
+      COEFFS 0 81.9175 0 0 0 1
+    </COMPU_METHOD>
+
+    
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  type FORM should only be used if the computation is complex and not feasible by RAT_FUNC        */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  FORM is neccessary for VIRTUAL measuerments                                                     */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+    <COMPU_METHOD property="CM.FORM.X_PLUS_4">
+      &quot;&quot; 
+      FORM 
+      &quot;%6.1&quot; 
+      &quot;rpm&quot; 
+      <FORMULA>
+        &quot;X1+4&quot; 
+        FORMULA_INV &quot;X1-4&quot;
+      </FORMULA>
+    </COMPU_METHOD>
+
+
+    <COMPU_METHOD property="CM.VIRTUAL.EXTERNAL_VALUE">
+      &quot;&quot; 
+      FORM 
+      &quot;%6.1&quot; 
+      &quot;rpm&quot; 
+      <FORMULA>
+        &quot;4*X1&quot;                                             /* FORMULA_INV not needed here */
+      </FORMULA>
+    </COMPU_METHOD>
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  type TAB_INTP and TAB_NOINTP should only be used if the computation is complex and not          */
+/*  feasible by RAT_FUNC                                                                            */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+    <COMPU_METHOD property="CM.TAB_INTP.DEFAULT_VALUE">
+      &quot;&quot; 
+      TAB_INTP &quot;%8.4&quot; &quot;U/  min  &quot; 
+      COMPU_TAB_REF CM.TAB_INTP.DEFAULT_VALUE.REF
+    </COMPU_METHOD>
+
+    <COMPU_TAB property="CM.TAB_INTP.DEFAULT_VALUE.REF">
+       &quot;&quot; 
+       TAB_INTP 
+       12 
+       -3 98   
+       -1 99   
+       0 100
+       2 102   
+       4 104  
+       5 105  
+       6 106 
+       7 107  
+       8 108  
+       9 109  
+       10 110  
+       13 111
+       DEFAULT_VALUE_NUMERIC 300.56                        /* DEFAULT_VALUE_NUMERIC should be used here as the normal output is numeric */
+    </COMPU_TAB>
+
+    <COMPU_METHOD property="CM.TAB_INTP.NO_DEFAULT_VALUE">
+      &quot;&quot; 
+      TAB_INTP &quot;%8.4&quot; &quot;U/  min  &quot; 
+      COMPU_TAB_REF CM.TAB_INTP.NO_DEFAULT_VALUE.REF
+    </COMPU_METHOD>
+    
+    <COMPU_TAB property="CM.TAB_INTP.NO_DEFAULT_VALUE.REF">
+       &quot;&quot; 
+       TAB_INTP 
+       12 
+       -3 98   
+       -1 99   
+       0 100
+       2 102   
+       4 104  
+       5 105  
+       6 106 
+       7 107  
+       8 108  
+       9 109  
+       10 110  
+       13 111
+    </COMPU_TAB>
+
+
+    <COMPU_METHOD property="CM.TAB_NOINTP.DEFAULT_VALUE">
+      &quot;&quot; 
+      TAB_INTP &quot;%8.4&quot; &quot;U/  min  &quot; 
+      COMPU_TAB_REF CM.TAB_NOINTP.DEFAULT_VALUE.REF
+    </COMPU_METHOD>
+    
+    <COMPU_TAB property="CM.TAB_NOINTP.DEFAULT_VALUE.REF">
+       &quot;&quot; 
+       TAB_NOINTP 
+       12 
+       -3 98   
+       -1 99   
+       0 100
+       2 102   
+       4 104  
+       5 105  
+       6 106 
+       7 107  
+       8 108  
+       9 109  
+       10 110  
+       13 111
+       DEFAULT_VALUE_NUMERIC 300.56                        /* DEFAULT_VALUE_NUMERIC should be used here as the normal output is numeric */
+    </COMPU_TAB>
+
+    <COMPU_METHOD property="CM.TAB_NOINTP.NO_DEFAULT_VALUE">
+      &quot;&quot; 
+      TAB_INTP &quot;%8.4&quot; &quot;U/  min  &quot; 
+      COMPU_TAB_REF CM.TAB_NOINTP.NO_DEFAULT_VALUE.REF
+    </COMPU_METHOD>
+    
+    <COMPU_TAB property="CM.TAB_NOINTP.NO_DEFAULT_VALUE.REF">
+       &quot;&quot; 
+       TAB_NOINTP 
+       12 
+       -3 98   
+       -1 99   
+       0 100
+       2 102   
+       4 104  
+       5 105  
+       6 106 
+       7 107  
+       8 108  
+       9 109  
+       10 110  
+       13 111
+    </COMPU_TAB>
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  type TAB_VERB and TAB_VERB_RANGE allow to convert to text                                       */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  Testbench with ASAP3 do not support text. It is common use that the MCD tools transfer the      */
+/*  internal value instead                                                                          */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+    <COMPU_METHOD property="CM.TAB_VERB.DEFAULT_VALUE">
+      &quot;Verbal conversion with default value&quot;
+      TAB_VERB &quot;%12.0&quot; &quot;&quot;
+      COMPU_TAB_REF CM.TAB_VERB.DEFAULT_VALUE.REF
+    </COMPU_METHOD>
+    <COMPU_VTAB property="CM.TAB_VERB.DEFAULT_VALUE.REF">
+      &quot;List of text strings and relation to impl value&quot; 
+      TAB_VERB 3
+      1 &quot;SawTooth&quot;
+      2 &quot;Square&quot;
+      3 &quot;Sinus&quot;
+      DEFAULT_VALUE &quot;unknown signal type&quot;
+    </COMPU_VTAB>
+
+    <COMPU_METHOD property="CM.TAB_VERB.NO_DEFAULT_VALUE">
+      &quot;Verbal conversion without default value&quot;
+      TAB_VERB &quot;%12.0&quot; &quot;&quot;
+      COMPU_TAB_REF CM.TAB_VERB.NO_DEFAULT_VALUE.REF
+    </COMPU_METHOD>
+    <COMPU_VTAB property="CM.TAB_VERB.NO_DEFAULT_VALUE.REF">
+      &quot;List of text strings and relation to impl value&quot; 
+      TAB_VERB 6
+      2 &quot;red&quot;
+      3 &quot;orange&quot;
+      4 &quot;yellow&quot;
+      5 &quot;green&quot;
+      6 &quot;blue&quot;
+      7 &quot;violet&quot;
+    </COMPU_VTAB>
+
+
+    <COMPU_METHOD property="CM.VTAB_RANGE.DEFAULT_VALUE">
+       &quot;verbal range with default value&quot; 
+       TAB_VERB 
+       &quot;%4.2&quot; 
+       &quot;&quot; 
+       COMPU_TAB_REF CM.VTAB_RANGE.DEFAULT_VALUE.REF 
+    </COMPU_METHOD>
+    
+    <COMPU_VTAB_RANGE property="CM.VTAB_RANGE.DEFAULT_VALUE.REF">
+       &quot;&quot; 
+       11 
+       0 1 &quot;Zero_to_one&quot; 
+       2 3 &quot;two_to_three&quot; 
+       4 7 &quot;four_to_seven&quot; 
+       14 17 &quot;fourteen_to_seventeen&quot; 
+       18 99 &quot;eigteen_to_ninetynine&quot; 
+       100 100 &quot;hundred&quot; 
+       101 101 &quot;hundredone&quot; 
+       102 102 &quot;hundredtwo&quot; 
+       103 103 &quot;hundredthree&quot; 
+       104 104 &quot;hundredfour&quot; 
+       105 105 &quot;hundredfive&quot; 
+       DEFAULT_VALUE &quot;out of range value&quot;
+    </COMPU_VTAB_RANGE>
+
+    <COMPU_METHOD property="CM.VTAB_RANGE.NO_DEFAULT_VALUE">
+       &quot;verbal range without default value&quot; 
+       TAB_VERB 
+       &quot;%4.2&quot; 
+       &quot;&quot; 
+       COMPU_TAB_REF CM.VTAB_RANGE.NO_DEFAULT_VALUE.REF 
+    </COMPU_METHOD>
+    
+    <COMPU_VTAB_RANGE property="CM.VTAB_RANGE.NO_DEFAULT_VALUE.REF">
+       &quot;&quot; 
+       11 
+       0 1 &quot;Zero_to_one&quot; 
+       2 3 &quot;two_to_three&quot; 
+       4 7 &quot;four_to_seven&quot; 
+       14 17 &quot;fourteen_to_seventeen&quot; 
+       18 99 &quot;eigteen_to_ninetynine&quot; 
+       100 100 &quot;hundred&quot; 
+       101 101 &quot;hundredone&quot; 
+       102 102 &quot;hundredtwo&quot; 
+       103 103 &quot;hundredthree&quot; 
+       104 104 &quot;hundredfour&quot; 
+       105 105 &quot;hundredfive&quot; 
+    </COMPU_VTAB_RANGE>
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  Measurements                                                                                    */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  In this example the values for Resolution and Accuracy are set to &quot;0&quot; as they are normally      */
+/*  not evaluated by measurement and calibration tools                                              */
+/*  It is allowed to use the same address for multiple measurements. By this it is possible         */
+/*  to use different bitmasks / computation methods for the same int value                          */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  There is for each data type one example                                                         */
+/*  With one data type (UBYTE) there is for each computation method an example                      */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+
+    <MEASUREMENT property="ASAM.M.SCALAR.UBYTE.IDENTICAL">
+      &quot;Scalar measurement&quot;
+      UBYTE CM.IDENTICAL 0 0 0 255
+      ECU_ADDRESS 0x13A00
+      FORMAT &quot;%5.0&quot;    /* Note: Overwrites the format stated in the computation method */
+      DISPLAY_IDENTIFIER DI.ASAM.M.SCALAR.UBYTE.IDENTICAL    /* optional display identifier */
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.UBYTE.TAB_VERB_DEFAULT_VALUE">
+      &quot;Scalar measurement with verbal conversion and default value&quot;
+      UBYTE CM.TAB_VERB.DEFAULT_VALUE 0 0 0 255
+      ECU_ADDRESS 0x13A00                                  /* same address as SAM.SCALAR.UBYTE.IDENTICAL -> same int value but different phys value */
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.UBYTE.TAB_VERB_NO_DEFAULT_VALUE">
+      &quot;Scalar measurement with verbal conversion&quot;
+      UBYTE CM.TAB_VERB.NO_DEFAULT_VALUE 0 0 0 255
+      ECU_ADDRESS 0x13A00                                  /* same address as SAM.SCALAR.UBYTE.IDENTICAL -> same int value but different phys value */
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.UBYTE.VTAB_RANGE_DEFAULT_VALUE">
+      &quot;Scalar measurement with verbal conversion and default value&quot;
+      UBYTE CM.VTAB_RANGE.DEFAULT_VALUE 0 0 0 255
+      ECU_ADDRESS 0x13A00                                  /* same address as SAM.SCALAR.UBYTE.IDENTICAL -> same int value but different phys value */
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.UBYTE.VTAB_RANGE_NO_DEFAULT_VALUE">
+      &quot;Scalar measurement with verbal conversion and default value&quot;
+      UBYTE CM.VTAB_RANGE.NO_DEFAULT_VALUE 0 0 0 101       /* the limits should not exceed the limits of the computation method ! otherwise the physical representation could be misleading */
+      ECU_ADDRESS 0x13A00                                  /* same address as SAM.SCALAR.UBYTE.IDENTICAL -> same int value but different phys value */
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.UBYTE.TAB_INTP_DEFAULT_VALUE">
+      &quot;Scalar measurement with verbal conversion and default value&quot;
+      UBYTE CM.TAB_INTP.DEFAULT_VALUE 0 0 0 255
+      ECU_ADDRESS 0x13A00                                  /* same address as SAM.SCALAR.UBYTE.IDENTICAL -> same int value but different phys value */
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.UBYTE.TAB_INTP_NO_DEFAULT_VALUE">
+      &quot;Scalar measurement with verbal conversion and default value&quot;
+      UBYTE CM.TAB_INTP.NO_DEFAULT_VALUE 0 0 0 13          /* the limits should not exceed the limits of the computation method ! otherwise the physical representation could be misleading */
+      ECU_ADDRESS 0x13A00                                  /* same address as SAM.SCALAR.UBYTE.IDENTICAL -> same int value but different phys value */
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.UBYTE.TAB_NOINTP_DEFAULT_VALUE">
+      &quot;Scalar measurement with verbal conversion and default value&quot;
+      UBYTE CM.TAB_NOINTP.DEFAULT_VALUE 0 0 0 255
+      ECU_ADDRESS 0x13A00                                  /* same address as SAM.SCALAR.UBYTE.IDENTICAL -> same int value but different phys value */
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.UBYTE.TAB_NOINTP_NO_DEFAULT_VALUE">
+      &quot;Scalar measurement with verbal conversion and default value&quot;
+      UBYTE CM.TAB_NOINTP.NO_DEFAULT_VALUE 0 0 0 13        /* the limits should not exceed the limits of the computation method ! otherwise the physical representation could be misleading */
+      ECU_ADDRESS 0x13A00                                  /* same address as SAM.SCALAR.UBYTE.IDENTICAL -> same int value but different phys value */
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.UBYTE.FORM_X_PLUS_4">
+      &quot;Scalar measurement&quot;
+      UBYTE CM.FORM.X_PLUS_4 0 0 4 259
+      ECU_ADDRESS 0x13A00
+      FORMAT &quot;%5.0&quot;    /* Note: Overwrites the format stated in the computation method */
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.SBYTE.IDENTICAL">
+      &quot;Scalar measurement&quot;
+      SBYTE CM.IDENTICAL 0 0 -128 127
+      ECU_ADDRESS 0x13A01
+      FORMAT &quot;%5.0&quot;
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.SBYTE.LINEAR_MUL_2">
+      &quot;Scalar measurement&quot;
+      SBYTE CM.LINEAR.MUL_2 0 0 -256 254
+      ECU_ADDRESS 0x13A01                                  /* same address as ASAM.M.SCALAR.SBYTE.IDENTICAL -> same int value but different phys value */
+      FORMAT &quot;%5.0&quot;
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.UWORD.IDENTICAL">
+      &quot;Scalar measurement&quot;
+      UWORD CM.IDENTICAL 0 0 0 65535
+      ECU_ADDRESS 0x13A02
+      FORMAT &quot;%5.0&quot;
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.SWORD.IDENTICAL">
+      &quot;Scalar measurement&quot;
+      SWORD CM.IDENTICAL 0 0 -32268 32267
+      ECU_ADDRESS 0x13A04
+      FORMAT &quot;%5.0&quot;
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.ULONG.IDENTICAL">
+      &quot;Scalar measurement&quot;
+      ULONG CM.IDENTICAL 0 0 0 4294967295
+      ECU_ADDRESS 0x13A08
+      FORMAT &quot;%5.0&quot;
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.SLONG.IDENTICAL">
+      &quot;Scalar measurement&quot;
+      SLONG CM.IDENTICAL 0 0 -2147483648 2147483647
+      ECU_ADDRESS 0x13A0C
+      FORMAT &quot;%5.0&quot;
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.FLOAT32.IDENTICAL">
+      &quot;Scalar measurement&quot;
+      FLOAT32_IEEE CM.IDENTICAL 0 0 -1e24 1e24
+      ECU_ADDRESS 0x13A10
+      FORMAT &quot;%8.4&quot;
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.FLOAT64.IDENTICAL">
+      &quot;Scalar measurement&quot;
+      FLOAT64_IEEE CM.IDENTICAL 0 0 -1e308 1e308
+      ECU_ADDRESS 0x13A14
+      FORMAT &quot;%8.4&quot;
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.UWORD.IDENTICAL.BITMASK_0FF0">
+      &quot;Scalar measurement with Bitmask for a bit-area&quot;
+      UWORD CM.IDENTICAL 0 0 0 255
+      BIT_MASK 0x0FF0
+      ECU_ADDRESS 0x13A20
+      FORMAT &quot;%5.0&quot;
+    </MEASUREMENT>
+
+    <MEASUREMENT property="ASAM.M.SCALAR.UWORD.IDENTICAL.BITMASK_0008">
+      &quot;Scalar measurement with Bitmask for a single bit&quot;
+      UWORD CM.IDENTICAL 0 0 0 1
+      BIT_MASK 0x0008
+      ECU_ADDRESS 0x13A20
+      FORMAT &quot;%5.0&quot;
+    </MEASUREMENT>
+
+
+    <MEASUREMENT property="ASAM.M.ARRAY_SIZE_16.UBYTE.IDENTICAL">
+      &quot;Scalar measurement&quot;
+      UBYTE CM.IDENTICAL 0 0 0 255
+      ECU_ADDRESS 0x13A30
+      FORMAT &quot;%5.0&quot;
+      ARRAY_SIZE 16                                        /* Note: ARRAY_SIZE allows only 1 dimension. For more dimensions use MATRIX_DIM */
+    </MEASUREMENT>
+
+
+    <MEASUREMENT property="ASAM.M.MATRIX_DIM_16_1_1.UBYTE.IDENTICAL">
+      &quot;Scalar measurement&quot;
+      UBYTE CM.IDENTICAL 0 0 0 255
+      ECU_ADDRESS 0x13A30
+      FORMAT &quot;%5.0&quot;
+      MATRIX_DIM 16 1 1
+    </MEASUREMENT>
+    
+    <MEASUREMENT property="ASAM.M.MATRIX_DIM_8_2_1.UBYTE.IDENTICAL">
+      &quot;Scalar measurement&quot;
+      UBYTE CM.IDENTICAL 0 0 0 255
+      ECU_ADDRESS 0x13A30
+      FORMAT &quot;%5.0&quot;
+      MATRIX_DIM 8 2 1
+    </MEASUREMENT>
+    
+    <MEASUREMENT property="ASAM.M.MATRIX_DIM_8_4_2.UBYTE.IDENTICAL">
+      &quot;Scalar measurement&quot;
+      UBYTE CM.IDENTICAL 0 0 0 255
+      ECU_ADDRESS 0x13A30
+      FORMAT &quot;%5.0&quot;
+      MATRIX_DIM 8 4 2
+    </MEASUREMENT>
+
+    
+    <MEASUREMENT property="ASAM.M.VIRTUAL.SCALAR.SWORD.PHYSICAL">
+      &quot;Virtual measurement with 2 * ASAM.M.SCALAR.SBYTE.LINEAR_MUL_2 as input (based on the phys value of ASAM.M.SCALAR.SBYTE.LINEAR_MUL_2&quot;
+      SWORD 
+      CM.VIRTUAL.EXTERNAL_VALUE                            /* computation method defines how the virtual measurement is calculated out of the input measurement */
+      0 0 -32768 32767
+      ECU_ADDRESS 0x0                                      /* no real address, measurement value is calculated by the MCD tool */
+      <VIRTUAL>
+        ASAM.M.SCALAR.SBYTE.LINEAR_MUL_2                     /* defines the input used for the computation metthod */
+      </VIRTUAL>
+    </MEASUREMENT>
+
+
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  Record Layouts for Characteristics (Parameters)                                                 */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+    <RECORD_LAYOUT property="RL.FNC.UBYTE.ROW_DIR">
+      FNC_VALUES 1 UBYTE ROW_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.SBYTE.ROW_DIR">
+      FNC_VALUES 1 SBYTE ROW_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.UWORD.ROW_DIR">
+      FNC_VALUES 1 UWORD ROW_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.SWORD.ROW_DIR">
+      FNC_VALUES 1 SWORD ROW_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.ULONG.ROW_DIR">
+      FNC_VALUES 1 ULONG ROW_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.SLONG.ROW_DIR">
+      FNC_VALUES 1 SLONG ROW_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.FLOAT32_IEEE.ROW_DIR">
+      FNC_VALUES 1 FLOAT32_IEEE ROW_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.FLOAT64_IEEE.ROW_DIR">
+      FNC_VALUES 1 FLOAT64_IEEE ROW_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.UBYTE.COLUMN_DIR">
+      FNC_VALUES 1 UBYTE COLUMN_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.SBYTE.COLUMN_DIR">
+      FNC_VALUES 1 SBYTE COLUMN_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.UWORD.COLUMN_DIR">
+      FNC_VALUES 1 UWORD COLUMN_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.SWORD.COLUMN_DIR">
+      FNC_VALUES 1 SWORD COLUMN_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.ULONG.COLUMN_DIR">
+      FNC_VALUES 1 ULONG COLUMN_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.SLONG.COLUMN_DIR">
+      FNC_VALUES 1 SLONG COLUMN_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.FLOAT32_IEEE.COLUMN_DIR">
+      FNC_VALUES 1 FLOAT32_IEEE COLUMN_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.FNC.FLOAT64_IEEE.COLUMN_DIR">
+      FNC_VALUES 1 FLOAT64_IEEE COLUMN_DIR DIRECT
+    </RECORD_LAYOUT>
+
+
+    <RECORD_LAYOUT property="RL.AXIS.UBYTE">
+      AXIS_PTS_X 1 UBYTE INDEX_INCR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.AXIS.UWORD">
+      AXIS_PTS_X 1 UWORD INDEX_INCR DIRECT
+    </RECORD_LAYOUT>
+
+
+    <RECORD_LAYOUT property="RL.CURVE.SWORD.SBYTE.DECR">
+      NO_AXIS_PTS_X 1 UBYTE                                /* current number of axis points */
+      AXIS_PTS_X 2 SBYTE INDEX_DECR DIRECT
+      FNC_VALUES 3 SWORD ROW_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.CURVE.SWORD.SBYTE.INCR">
+      NO_AXIS_PTS_X 1 UBYTE                                /* current number of axis points */
+      AXIS_PTS_X 2 SBYTE INDEX_INCR DIRECT
+      FNC_VALUES 3 SWORD ROW_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.AXIS_PTS.SBYTE.DECR">
+      NO_AXIS_PTS_X 1 UBYTE                                /* current number of axis points */
+      AXIS_PTS_X 2 SBYTE INDEX_DECR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.AXIS_PTS.RES_AXIS">
+      NO_RESCALE_X      1 UBYTE
+      RESERVED          2 BYTE                             /* to adapt the start of the rescale pairs to an even address */
+      AXIS_RESCALE_X    3 UBYTE 5 INDEX_INCR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.MAP.SWORD.SBYTE.SBYTE.INCR">
+      NO_AXIS_PTS_X 1 UBYTE                                /* current number of axis points */
+      NO_AXIS_PTS_Y 2 UBYTE                                /* current number of axis points */
+      AXIS_PTS_X 3 SBYTE INDEX_INCR DIRECT
+      AXIS_PTS_Y 4 SBYTE INDEX_INCR DIRECT
+      FNC_VALUES 5 SWORD ROW_DIR DIRECT
+    </RECORD_LAYOUT>
+
+    <RECORD_LAYOUT property="RL.CUBOID.SWORD.SBYTE.DECR">
+      NO_AXIS_PTS_Z 1 UBYTE                                /* current number of axis points */
+      AXIS_PTS_Z 2 SBYTE INDEX_DECR DIRECT
+      FNC_VALUES 3 SWORD ROW_DIR DIRECT
+    </RECORD_LAYOUT>
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  Scalar Characteristics (Parameters)                                                             */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  MAX_DIF is always set to 0 as it is normally not evaluated by measurement and calibration tools */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  There is for each data type one example                                                         */
+/*  With one data type (SWORD) there is for each computation method an example                      */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.UBYTE.IDENTICAL">
+      &quot;Scalar FW U16 and CDF20 as name&quot;
+      VALUE 
+      0x810000 
+      RL.FNC.UBYTE.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.IDENTICAL  
+      10 200
+      EXTENDED_LIMITS 0 256
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.UBYTE
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SBYTE.IDENTICAL">
+      &quot;Scalar SBYTE&quot;
+      VALUE 
+      0x810001 
+      RL.FNC.SBYTE.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.IDENTICAL  
+      -100 100
+      EXTENDED_LIMITS -128 127
+      FORMAT &quot;%6.1&quot;                                         /* overwrites the format given in the computation method */
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SBYTE.IDENTICAL
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.UWORD.IDENTICAL">
+      &quot;Scalar UWORD&quot;
+      VALUE 
+      0x810002 
+      RL.FNC.UWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.IDENTICAL  
+      0 65535
+      EXTENDED_LIMITS 0 65535
+      BIT_MASK 0xFFFF
+      FORMAT &quot;%5.0&quot;
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.UWORD.IDENTICAL
+      <ANNOTATION>
+        ANNOTATION_LABEL &quot;ASAM Workinggroup&quot;
+        ANNOTATION_ORIGIN &quot;&quot;
+        <ANNOTATION_TEXT>
+          &quot;Test the A2L annotation&quot;
+        </ANNOTATION_TEXT>
+      </ANNOTATION>
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0FF0">
+      &quot;Scalar UWORD&quot;
+      VALUE 
+      0x810002 
+      RL.FNC.UWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.IDENTICAL  
+      0 255
+      EXTENDED_LIMITS 0 65535
+      BIT_MASK 0x0FF0
+      FORMAT &quot;%5.0&quot;
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0FF0
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0001">
+      &quot;Scalar UWORD&quot;
+      VALUE 
+      0x810002 
+      RL.FNC.UWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.IDENTICAL  
+      0 1
+      EXTENDED_LIMITS 0 65535
+      BIT_MASK 0x0001
+      FORMAT &quot;%5.0&quot;
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0001
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0010">
+      &quot;Scalar UWORD&quot;
+      VALUE 
+      0x810002 
+      RL.FNC.UWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.IDENTICAL  
+      0 1
+      EXTENDED_LIMITS 0 65535
+      BIT_MASK 0x0010
+      FORMAT &quot;%5.0&quot;
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0010
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SWORD.IDENTICAL">
+      &quot;Scalar SWORD&quot;
+      VALUE 
+      0x810004 
+      RL.FNC.SWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.IDENTICAL  
+      -10000 20000
+      EXTENDED_LIMITS -32268 32267
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SWORD.IDENTICAL
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SWORD.LINEAR_MUL_2">
+      &quot;Scalar SWORD&quot;
+      VALUE 
+      0x810004 
+      RL.FNC.SWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.LINEAR.MUL_2  
+      -10000 20000
+      EXTENDED_LIMITS -32268 32267
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SWORD.LINEAR_MUL_2
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SWORD.RAT_FUNC_DIV_10">
+      &quot;Scalar SWORD&quot;
+      VALUE 
+      0x810004 
+      RL.FNC.SWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.RAT_FUNC.DIV_10  
+      -10000 20000
+      EXTENDED_LIMITS -32268 32267
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SWORD.RAT_FUNC_DIV_10
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SWORD.FORM_X_PLUS_4">
+      &quot;Scalar SWORD&quot;
+      VALUE 
+      0x810004 
+      RL.FNC.SWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.FORM.X_PLUS_4  
+      -10000 20000
+      EXTENDED_LIMITS -32268 32267
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SWORD.FORM_X_PLUS_4
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SWORD.TAB_INTP_DEFAULT_VALUE">
+      &quot;Scalar SWORD&quot;
+      VALUE 
+      0x810004 
+      RL.FNC.SWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.TAB_INTP.DEFAULT_VALUE  
+      -10000 20000
+      EXTENDED_LIMITS -32268 32267
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SWORD.TAB_INTP_DEFAULT_VALUE
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SWORD.TAB_INTP_NO_DEFAULT_VALUE">
+      &quot;Scalar SWORD&quot;
+      VALUE 
+      0x810004 
+      RL.FNC.SWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.TAB_INTP.NO_DEFAULT_VALUE  
+      -10000 20000
+      EXTENDED_LIMITS -32268 32267
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SWORD.TAB_INTP_NO_DEFAULT_VALUE
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SWORD.TAB_NOINTP_DEFAULT_VALUE">
+      &quot;Scalar SWORD&quot;
+      VALUE 
+      0x810004 
+      RL.FNC.SWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.TAB_NOINTP.DEFAULT_VALUE  
+      -10000 20000
+      EXTENDED_LIMITS -32268 32267
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SWORD.TAB_NOINTP_DEFAULT_VALUE
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SWORD.TAB_NOINTP_NO_DEFAULT_VALUE">
+      &quot;Scalar SWORD&quot;
+      VALUE 
+      0x810004 
+      RL.FNC.SWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.TAB_NOINTP.NO_DEFAULT_VALUE  
+      -10000 20000
+      EXTENDED_LIMITS -32268 32267
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SWORD.TAB_NOINTP_NO_DEFAULT_VALUE
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SWORD.TAB_VERB_DEFAULT_VALUE">
+      &quot;Scalar SWORD&quot;
+      VALUE 
+      0x810004 
+      RL.FNC.SWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.TAB_VERB.DEFAULT_VALUE  
+      -10000 20000
+      EXTENDED_LIMITS -32268 32267
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SWORD.TAB_VERB_DEFAULT_VALUE
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SWORD.TAB_VERB_NO_DEFAULT_VALUE">
+      &quot;Scalar SWORD&quot;
+      VALUE 
+      0x810004 
+      RL.FNC.SWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.TAB_VERB.NO_DEFAULT_VALUE  
+      -10000 20000
+      EXTENDED_LIMITS -32268 32267
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SWORD.TAB_VERB_NO_DEFAULT_VALUE
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SWORD.VTAB_RANGE_DEFAULT_VALUE">
+      &quot;Scalar SWORD&quot;
+      VALUE 
+      0x810004 
+      RL.FNC.SWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.VTAB_RANGE.DEFAULT_VALUE  
+      -10000 20000
+      EXTENDED_LIMITS -32268 32267
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SWORD.VTAB_RANGE_DEFAULT_VALUE
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SWORD.VTAB_RANGE_NO_DEFAULT_VALUE">
+      &quot;Scalar SWORD&quot;
+      VALUE 
+      0x810004 
+      RL.FNC.SWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.VTAB_RANGE.NO_DEFAULT_VALUE  
+      -10000 20000
+      EXTENDED_LIMITS -32268 32267
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SWORD.VTAB_RANGE_NO_DEFAULT_VALUE
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SWORD.RAT_FUNC_DIV_81_9175">
+      &quot;Scalar SWORD&quot;
+      VALUE 
+      0x810004 
+      RL.FNC.SWORD.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.RAT_FUNC.DIV_81_9175  
+      -10000 20000
+      EXTENDED_LIMITS -32268 32267
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SWORD
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.ULONG.IDENTICAL">
+      &quot;Scalar ULONG&quot;
+      VALUE 
+      0x810008 
+      RL.FNC.ULONG.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.IDENTICAL  
+      -1000000 2000000
+      EXTENDED_LIMITS -10000000 20000000
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.ULONG.IDENTICAL
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.SLONG.IDENTICAL">
+      &quot;Scalar SLONG&quot;
+      VALUE 
+      0x81000C 
+      RL.FNC.SLONG.ROW_DIR                                 /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.IDENTICAL  
+      -1000000 2000000
+      EXTENDED_LIMITS -10000000 20000000
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.SLONG.IDENTICAL
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.FLOAT32_IEEE.IDENTICAL">
+      &quot;Scalar FLOAT32_IEEE&quot;
+      VALUE 
+      0x810010 
+      RL.FNC.FLOAT32_IEEE.ROW_DIR                          /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.IDENTICAL  
+      10 200
+      EXTENDED_LIMITS 0 256
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.FLOAT32_IEEE.IDENTICAL
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.SCALAR.FLOAT64_IEEE.IDENTICAL">
+      &quot;Scalar FLOAT64_IEEE&quot;
+      VALUE 
+      0x810010 
+      RL.FNC.FLOAT64_IEEE.ROW_DIR                          /* ROW_DIR / COLUMN_DIR is here exchangeable as only one value is stored */
+      0 
+      CM.IDENTICAL  
+      -100 200
+      EXTENDED_LIMITS -10000.0 20000.0
+      DISPLAY_IDENTIFIER DI.ASAM.C.SCALAR.FLOAT64_IEEE.IDENTICAL
+    </CHARACTERISTIC>
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  Array Characteristics (Parameters)                                                              */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  All examples are based on SWORD. For other data types see scalare parameters                    */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  For curve are examples for all kind of axis available                                           */
+/*  For map, cuboid are examples with mixed axis types available                                    */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+
+
+    <CHARACTERISTIC property="ASAM.C.ARRAY.SWORD.MATRIX_DIM_3_4.ROW_DIR">
+      &quot;Array 3x4 of SWORD&quot;
+      VAL_BLK 
+      0x810100 
+      RL.FNC.SWORD.ROW_DIR 
+      0 
+      CM.IDENTICAL  
+      -400 400
+      EXTENDED_LIMITS -1000 1000
+      MATRIX_DIM 3 4 1
+      FORMAT &quot;%8.4&quot;
+      DISPLAY_IDENTIFIER DI.ASAM.C.ARRAY.SWORD.MATRIX_DIM_3_4.ROW_DIR
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.ARRAY.SWORD.MATRIX_DIM_3_4.COLUMN_DIR">
+      &quot;Array 3x4 of SWORD&quot;
+      VAL_BLK 
+      0x810120 
+      RL.FNC.SWORD.COLUMN_DIR 
+      0 
+      CM.IDENTICAL  
+      -400 400
+      EXTENDED_LIMITS -1000 1000
+      MATRIX_DIM 3 4 1
+      FORMAT &quot;%8.4&quot;
+      DISPLAY_IDENTIFIER DI.ASAM.C.ARRAY.SWORD.MATRIX_DIM_3_4.COLUMN_DIR
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.ARRAY.SWORD.MATRIX_DIM_6.ROW_DIR">
+      &quot;Array 6 of SWORD&quot;
+      VAL_BLK 
+      0x810140 
+      RL.FNC.SWORD.ROW_DIR                                 /* COLUMN_DIR results here in the same memory usage as only one dimension is used */
+      0 
+      CM.IDENTICAL  
+      -400 400
+      EXTENDED_LIMITS -1000 1000
+      MATRIX_DIM 6 1 1
+      FORMAT &quot;%8.4&quot;
+      DISPLAY_IDENTIFIER DI.ASAM.C.ARRAY.SWORD.MATRIX_DIM_6.ROW_DIR
+    </CHARACTERISTIC>
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  ASCII Characteristics (Parameters)                                                              */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  All examples are based on UBYTE. This is necessary for ASCII                                    */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  NUMBER shall state the maximum (fixed) size of memory available on the ECU                      */
+/*  The string representation in the MCD tool is normally 0-terminated. There the string may be     */
+/*  limited earlier                                                                                 */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+    <CHARACTERISTIC>
+      ASAM.C.ASCII.UBYTE.NUMBER_42
+      &quot;ASCII string&quot; 
+      ASCII 
+      0x810200
+      RL.FNC.UBYTE.ROW_DIR 
+      0 
+      CM.IDENTICAL 
+      0 255 
+      NUMBER 42 
+      DISPLAY_IDENTIFIER DI.ASAM.C.ASCII.UBYTE.NUMBER_42
+    </CHARACTERISTIC>
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  Curve, Map, Quboid Characteristics (Parameters)                                                 */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  All examples are based on SWORD. For other data types see scalare parameters                    */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  For curve are examples for all kind of axis available                                           */
+/*  For map, cuboid are examples with mixed axis types available                                    */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+    <CHARACTERISTIC property="ASAM.C.CURVE.STD_AXIS">
+      &quot;Curve with standard axis&quot;
+      CURVE 
+      0x810300                                             /* memory needed: 1x Byte for no of axis points, 8x Byte for axis points + 8x word for output values */
+      RL.CURVE.SWORD.SBYTE.DECR                            /* Record layout that covers axis and FNC values */
+      0 
+      CM.IDENTICAL  
+      -32268 32267 
+      <AXIS_DESCR>
+        STD_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        8 
+        -128 127
+      </AXIS_DESCR>
+      FORMAT &quot;%8.3&quot;
+      DISPLAY_IDENTIFIER DI.ASAM.C.CURVE.STD_AXIS
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.CURVE.COM_AXIS">
+      &quot;Curve with common axis&quot;
+      CURVE 
+      0x810320
+      RL.FNC.SWORD.ROW_DIR                                 /* Record layout that covers FNC values */
+      0 
+      CM.IDENTICAL 
+      -32268 32267
+      <AXIS_DESCR>
+        COM_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        8                                                  /* will be overwritten by max number of axis points of AXIS_PTS */
+        -128 127
+        AXIS_PTS_REF ASAM.C.AXIS_PTS.UBYTE_8
+      </AXIS_DESCR>
+      DISPLAY_IDENTIFIER DI.ASAM.C.CURVE.COM_AXIS
+    </CHARACTERISTIC>
+
+    <AXIS_PTS property="ASAM.C.AXIS_PTS.UBYTE_8">
+      &quot;Common axis for &quot;
+      0x810340
+      ASAM.M.SCALAR.SBYTE.IDENTICAL                        /* will be overwritten by input quantity of AXIS_DESCR */
+      RL.AXIS_PTS.SBYTE.DECR                               /* Record layout that covers axis values */
+      0 
+      CM.IDENTICAL                                         /* will be overwritten by computation method of AXIS_DESCR */
+      8 
+      -128 127
+      DISPLAY_IDENTIFIER DI.ASAM.C.AXIS_PTS.UBYTE_8
+    </AXIS_PTS>
+
+    <CHARACTERISTIC property="ASAM.C.CURVE.FIX_AXIS.PAR_DIST">
+      &quot;Curve with fix axis and FIX_AXIS_PAR_DIST&quot;
+      CURVE 
+      0x810350
+      RL.FNC.SWORD.ROW_DIR                                 /* Record layout that covers FNC values */
+      0 
+      CM.IDENTICAL 
+      -32268 32267
+      <AXIS_DESCR>
+        FIX_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        6 
+        -128 127
+        FIX_AXIS_PAR_DIST 1 1 6
+      </AXIS_DESCR>
+      DISPLAY_IDENTIFIER DI.ASAM.C.CURVE.FIX_AXIS.PAR_DIST
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.CURVE.FIX_AXIS.PAR">
+      &quot;Curve with fix axis and FIX_AXIS_PAR&quot;
+      CURVE 
+      0x810360
+      RL.FNC.SWORD.ROW_DIR                                 /* Record layout that covers FNC values */
+      0 
+      CM.IDENTICAL 
+      -32268 32267
+      <AXIS_DESCR>
+        FIX_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        6 
+        -128 127
+        FIX_AXIS_PAR_DIST 0 4 6
+      </AXIS_DESCR>
+      DISPLAY_IDENTIFIER DI.ASAM.C.CURVE.FIX_AXIS.PAR
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.CURVE.FIX_AXIS.PAR_LIST">
+      &quot;Curve with fix axis and FIX_AXIS_PAR_LIST&quot;
+      CURVE 
+      0x810370
+      RL.FNC.SWORD.ROW_DIR                                 /* Record layout that covers FNC values */
+      0 
+      CM.IDENTICAL 
+      -32268 32267
+      <AXIS_DESCR>
+        FIX_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        6                                                  /* shall match the number of axis points listed in FIX_AXIS_PAR_LIST */
+        -128 127
+        <FIX_AXIS_PAR_LIST>
+          -1 4 6 8 9 10
+        </FIX_AXIS_PAR_LIST>
+      </AXIS_DESCR>
+      DISPLAY_IDENTIFIER DI.ASAM.C.CURVE.FIX_AXIS.PAR_LIST
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.CURVE.CURVE_AXIS">
+      &quot;Curve with curve axis&quot;
+      CURVE 
+      0x810380
+      RL.FNC.SWORD.ROW_DIR                                 /* Record layout that covers FNC values */
+      0 
+      CM.IDENTICAL 
+      -32268 32267
+      <AXIS_DESCR>
+        CURVE_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        NO_COMPU_METHOD                                    /* CURVE_AXIS have no input conversion */  
+        8                                                  /* will be overwritten by max number of axis points of AXIS_PTS */
+        -128 127
+        CURVE_AXIS_REF ASAM.C.CURVE_AXIS
+      </AXIS_DESCR>
+      DISPLAY_IDENTIFIER DI.ASAM.C.CURVE.COM_AXIS
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.CURVE_AXIS">
+      &quot;Curve used as axis&quot;
+      CURVE 
+      0x810390 
+      RL.CURVE.SWORD.SBYTE.INCR                            /* Record layout that covers axis and FNC values */
+      0 
+      CM.IDENTICAL  
+      -32268 32267 
+      <AXIS_DESCR>
+        STD_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        8 
+        -128 127
+      </AXIS_DESCR>
+      DISPLAY_IDENTIFIER DI.ASAM.C.CURVE_AXIS
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.CURVE.RES_AXIS">
+      &quot;Curve with rescale axis&quot;
+      CURVE 
+      0x8103A0
+      RL.FNC.SWORD.ROW_DIR                                 /* Record layout that covers FNC values */
+      0 
+      CM.IDENTICAL 
+      -32268 32267
+      <AXIS_DESCR>
+        RES_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        9                                                  /* will be overwritten by number of rescale pairs */
+        0 255
+        AXIS_PTS_REF ASAM.C.AXIS_PTS.RESCALE
+      </AXIS_DESCR>
+      DISPLAY_IDENTIFIER DI.ASAM.C.CURVE.RES_AXIS
+    </CHARACTERISTIC>
+
+    <AXIS_PTS property="ASAM.C.AXIS_PTS.RESCALE">
+      &quot;Rescale Axis&quot; 
+      0x8103B0
+      ASAM.M.SCALAR.SBYTE.IDENTICAL 
+      RL.AXIS_PTS.RES_AXIS 
+      0 
+      CM.IDENTICAL 
+      5 
+      0 255 
+      DISPLAY_IDENTIFIER DI_0x83BA20.VTAB.RE_AXIS.X_RE_AXIS_xU8
+    </AXIS_PTS>
+
+    <CHARACTERISTIC property="ASAM.C.CURVE.STD_AXIS.MONOTONY_STRICT_INCREASE">
+      &quot;Curve with standard axis&quot;
+      CURVE 
+      0x810800 
+      RL.CURVE.SWORD.SBYTE.DECR                            /* Record layout that covers axis and FNC values */
+      0 
+      CM.IDENTICAL  
+      -32268 32267 
+      <AXIS_DESCR>
+        STD_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        8 
+        -128 127
+        MONOTONY STRICT_INCREASE                           /* allows only axis values strictly increasing */
+      </AXIS_DESCR>
+      FORMAT &quot;%8.3&quot;
+      DISPLAY_IDENTIFIER DI.ASAM.C.CURVE.STD_AXIS.MONOTONY_STRICT_INCREASE
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.CURVE.STD_AXIS.MONOTONY_STRICT_DECREASE">
+      &quot;Curve with standard axis&quot;
+      CURVE 
+      0x810820 
+      RL.CURVE.SWORD.SBYTE.DECR                            /* Record layout that covers axis and FNC values */
+      0 
+      CM.IDENTICAL  
+      -32268 32267 
+      <AXIS_DESCR>
+        STD_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        8 
+        -128 127
+        MONOTONY STRICT_DECREASE                           /* allows only axis values strictly decreasing */
+      </AXIS_DESCR>
+      FORMAT &quot;%8.3&quot;
+      DISPLAY_IDENTIFIER DI.ASAM.C.CURVE.STD_AXIS.MONOTONY_STRICT_DECREASE
+    </CHARACTERISTIC>
+
+
+    <CHARACTERISTIC property="ASAM.C.MAP.STD_AXIS.STD_AXIS">
+      &quot;Map with 2x standard axis&quot;
+      MAP 
+      0x810400                                             /* memory needed: 1x Byte for no of axis points, 8x Byte for axis points + 8x word for output values */
+      RL.MAP.SWORD.SBYTE.SBYTE.INCR                        /* Record layout that covers axis and FNC values */
+      0 
+      CM.IDENTICAL  
+      -32268 32267 
+      <AXIS_DESCR>
+        STD_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        4 
+        -128 127
+      </AXIS_DESCR>
+      <AXIS_DESCR>
+        STD_AXIS 
+        ASAM.M.SCALAR.UBYTE.TAB_VERB_NO_DEFAULT_VALUE 
+        CM.TAB_VERB.NO_DEFAULT_VALUE                       /* shall be the same computation as used with the input quantity */  
+        5 
+        -128 127
+      </AXIS_DESCR>
+      DISPLAY_IDENTIFIER DI.ASAM.C.MAP.STD_AXIS.STD_AXIS
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.MAP.COM_AXIS.FIX_AXIS">
+      &quot;Map with 2x standard axis&quot;
+      MAP 
+      0x810440                                             /* memory needed: 1x Byte for no of axis points, 8x Byte for axis points + 8x word for output values */
+      RL.FNC.SWORD.ROW_DIR                                 /* Record layout that covers FNC values */
+      0 
+      CM.IDENTICAL  
+      -32268 32267 
+      <AXIS_DESCR>
+        COM_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        8                                                  /* will be overwritten by max number of axis points of AXIS_PTS */
+        -128 127
+        AXIS_PTS_REF ASAM.C.AXIS_PTS.UBYTE_8
+      </AXIS_DESCR>
+      <AXIS_DESCR>
+        FIX_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        3 
+        -128 127
+        FIX_AXIS_PAR_DIST 1 1 3
+      </AXIS_DESCR>
+      DISPLAY_IDENTIFIER DI.ASAM.C.MAP.COM_AXIS.FIX_AXIS
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.CUBOID.COM_AXIS.FIX_AXIS.STD_AXIS">
+      &quot;Map with 2x standard axis&quot;
+      CUBOID 
+      0x810470 
+      RL.CUBOID.SWORD.SBYTE.DECR                           /* Record layout that covers FNC values + STD axis */
+      0 
+      CM.IDENTICAL  
+      -32268 32267 
+      <AXIS_DESCR>
+        COM_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        8 
+        -128 127
+        AXIS_PTS_REF ASAM.C.AXIS_PTS.UBYTE_8
+      </AXIS_DESCR>
+      <AXIS_DESCR>
+        FIX_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        3 
+        -128 127
+        FIX_AXIS_PAR_DIST 1 1 3
+      </AXIS_DESCR>
+      <AXIS_DESCR>
+        STD_AXIS 
+        ASAM.M.SCALAR.SBYTE.IDENTICAL 
+        CM.IDENTICAL                                       /* shall be the same computation as used with the input quantity */  
+        4 
+        -128 127
+      </AXIS_DESCR>
+      DISPLAY_IDENTIFIER DI.ASAM.C.CUBOID.COM_AXIS.FIX_AXIS.STD_AXIS
+    </CHARACTERISTIC>
+
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  Dependent Characteristics (Parameters)                                                          */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  The value of the dependent parameter is located in the ECU memory.                              */
+/*  The MCD tool updates the value when the source value is changed                                 */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+
+    <CHARACTERISTIC property="ASAM.C.DEPENDENT.REF_1.SWORD">
+      &quot;Dependent SWORD&quot; 
+      VALUE 
+      0x810600                                             /* dependent parameter is located in the ECU memory. The MCD tool updated the value when the source value is changed */
+      RL.FNC.SWORD.ROW_DIR                                 /* SWORD needed to cover the result of the dependent calculation */
+      0 
+      CM.IDENTICAL
+      -32268 32267
+      <DEPENDENT_CHARACTERISTIC>
+         &quot;X1 + 5&quot; 
+         ASAM.C.SCALAR.SBYTE.IDENTICAL                     /* used as input X1 variable in teh dependent formula */
+      </DEPENDENT_CHARACTERISTIC>
+      DISPLAY_IDENTIFIER DI.ASAM.C.DEPENDENT.REF_1.SWORD
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.DEPENDENT.REF_2.UWORD">
+      &quot;Dependent UWORD&quot; 
+      VALUE 
+      0x810602 
+      RL.FNC.UWORD.ROW_DIR                                 /* UWORD needed to cover the result of the dependent calculation */
+      0 
+      CM.IDENTICAL
+      0.0 65535.0 
+      <DEPENDENT_CHARACTERISTIC>
+        &quot;X1 + 25&quot; 
+        ASAM.C.SCALAR.UBYTE.IDENTICAL
+      </DEPENDENT_CHARACTERISTIC>
+      DISPLAY_IDENTIFIER DI.ASAM.C.DEPENDENT.REF_2.UWORD
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.DEPENDENT.REF_3.SWORD">
+      &quot;Dependent UWORD&quot; 
+      VALUE 
+      0x810604 
+      RL.FNC.SWORD.ROW_DIR                                 /* SWORD needed to cover the result of the dependent calculation */
+      0 
+      CM.IDENTICAL
+      -32268 32267
+      <DEPENDENT_CHARACTERISTIC>
+        &quot;X1 + X2&quot; 
+        ASAM.C.DEPENDENT.REF_1.SWORD
+        ASAM.C.DEPENDENT.REF_2.UWORD
+      </DEPENDENT_CHARACTERISTIC>
+      DISPLAY_IDENTIFIER DI.ASAM.C.DEPENDENT.REF_3.SWORD
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.DEPENDENT.REF_4.FLOAT64_IEEE">
+      &quot;Dependent UWORD&quot; 
+      VALUE 
+      0x810610 
+      RL.FNC.FLOAT64_IEEE.ROW_DIR                          /* SWORD needed to cover the result of the dependent calculation */
+      0 
+      CM.IDENTICAL
+      -32268 32267
+      <DEPENDENT_CHARACTERISTIC>
+        &quot;X1 + sysc(System_Constant_1)&quot;
+        ASAM.C.DEPENDENT.REF_1.SWORD
+      </DEPENDENT_CHARACTERISTIC>
+      DISPLAY_IDENTIFIER DI.ASAM.C.DEPENDENT.REF_4.FLOAT64_IEEE
+      FORMAT &quot;%8.2&quot;
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.DEPENDENT.REF_5.FLOAT64_IEEE">
+      &quot;Dependent UWORD&quot; 
+      VALUE 
+      0x810608 
+      RL.FNC.FLOAT64_IEEE.ROW_DIR                          /* SWORD needed to cover the result of the dependent calculation */
+      0 
+      CM.IDENTICAL
+      -10000.0 10000.0
+      <DEPENDENT_CHARACTERISTIC>
+        &quot;X1 * 2&quot; 
+        ASAM.C.VIRTUAL.SYSTEM_CONSTANT_1
+      </DEPENDENT_CHARACTERISTIC>
+      DISPLAY_IDENTIFIER DI.ASAM.C.DEPENDENT.REF_5.FLOAT64_IEEE
+      FORMAT &quot;%8.2&quot;
+    </CHARACTERISTIC>
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  Virtual Characteristics (Parameters)                                                            */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  The value of the virtual parameter is not located in the ECU memory. It is only visible         */
+/*  in the MCD tool                                                                                 */
+/*  The MCD tool updates the value when the source value is changed                                 */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+
+    <CHARACTERISTIC property="ASAM.C.VIRTUAL.REF_1.SWORD">
+      &quot;Virtual SWORD&quot; 
+      VALUE 
+      0x0                                                  /* address is 0 as the virtual value is not part of the ECU or the hex file */
+      RL.FNC.SWORD.ROW_DIR                                 /* SWORD needed to cover the result of the dependent calculation */
+      0 
+      CM.IDENTICAL
+      0 255
+      <VIRTUAL_CHARACTERISTIC>
+         &quot;X1 - 9&quot; 
+         ASAM.C.SCALAR.SBYTE.IDENTICAL                     /* used as input X1 variable in teh dependent formula */
+      </VIRTUAL_CHARACTERISTIC>
+      DISPLAY_IDENTIFIER DI.ASAM.C.VIRTUAL.REF_1.SWORD
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.VIRTUAL.REF_2.UWORD">
+      &quot;Virtual UWORD&quot; 
+      VALUE 
+      0x0                                                  /* address is 0 as the virtual value is not part of the ECU or the hex file */
+      RL.FNC.UWORD.ROW_DIR                                 /* UWORD needed to cover the result of the dependent calculation */
+      0 
+      CM.IDENTICAL
+      0.0 255.0 
+      <VIRTUAL_CHARACTERISTIC>
+        &quot;X1 + 19&quot; 
+        ASAM.C.SCALAR.UBYTE.IDENTICAL
+      </VIRTUAL_CHARACTERISTIC>
+      DISPLAY_IDENTIFIER DI.ASAM.C.VIRTUAL.REF_2.UWORD
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.VIRTUAL.REF_3.SWORD">
+      &quot;Virtual UWORD&quot; 
+      VALUE 
+      0x0                                                  /* address is 0 as the virtual value is not part of the ECU or the hex file */
+      RL.FNC.SWORD.ROW_DIR                                 /* SWORD needed to cover the result of the dependent calculation */
+      0 
+      CM.IDENTICAL
+      0.0 255.0 
+      <VIRTUAL_CHARACTERISTIC>
+        &quot;X1 + X2&quot; 
+        ASAM.C.VIRTUAL.REF_1.SWORD
+        ASAM.C.VIRTUAL.REF_2.UWORD
+      </VIRTUAL_CHARACTERISTIC>
+      DISPLAY_IDENTIFIER DI.ASAM.C.VIRTUAL.REF_3.SWORD
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.VIRTUAL.SYSTEM_CONSTANT_1">
+    &quot;Virtual value including a system constant in the calculation formula&quot;
+      VALUE
+      0x0                                                  /* address is 0 as the virtual value is not part of the ECU or the hex file */
+      RL.FNC.FLOAT64_IEEE.ROW_DIR                          /* Float needed to cover the result of the dependent calculation */
+      0 
+      CM.IDENTICAL
+      0.0 255.0 
+      <VIRTUAL_CHARACTERISTIC>
+        &quot;X1 + sysc(System_Constant_1)&quot;                     /* system constant needs to contain a valid number. Otherwise the calculation leeds to an error */
+        ASAM.C.SCALAR.UBYTE.IDENTICAL
+      </VIRTUAL_CHARACTERISTIC>
+      DISPLAY_IDENTIFIER DI.ASAM.C.VIRTUAL.SYSTEM_CONSTANT_1
+      FORMAT &quot;%8.2&quot;
+    </CHARACTERISTIC>
+
+    <CHARACTERISTIC property="ASAM.C.VIRTUAL.ASCII">
+    &quot;Virtual ASCII string&quot;
+      ASCII                                                /* type needs to be ASCII as the referenced system constant contains a string */
+      0x0                                                  /* address is 0 as the virtual value is not part of the ECU or the hex file */
+      RL.FNC.UBYTE.ROW_DIR                                 /* UBYTE needed to cover ASCII */
+      0 
+      CM.IDENTICAL
+      0.0 255.0 
+      <VIRTUAL_CHARACTERISTIC>
+        &quot;sysc(System_Constant_3)&quot; 
+      </VIRTUAL_CHARACTERISTIC>
+      NUMBER 100                                           /* needs minimum the length of the text length of the system constant */
+      DISPLAY_IDENTIFIER DI.ASAM.C.VIRTUAL.SYSTEM_CONSTANT_1
+    </CHARACTERISTIC>
+
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  Functions                                                                                       */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  Each parameter shall be defined (DEF_CHARACTERISTIC) only one time!                             */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+    <FUNCTION property="FunctionScalar &quot;&quot;">
+      <SUB_FUNCTION>
+        FunctionDependentParameters
+      </SUB_FUNCTION>
+      <DEF_CHARACTERISTIC>
+        ASAM.C.SCALAR.FLOAT32_IEEE.IDENTICAL
+        ASAM.C.SCALAR.FLOAT64_IEEE.IDENTICAL
+        ASAM.C.SCALAR.SBYTE.IDENTICAL
+        ASAM.C.SCALAR.SLONG.IDENTICAL
+        ASAM.C.SCALAR.SWORD.FORM_X_PLUS_4
+        ASAM.C.SCALAR.SWORD.IDENTICAL
+        ASAM.C.SCALAR.SWORD.LINEAR_MUL_2
+        ASAM.C.SCALAR.SWORD.RAT_FUNC_DIV_10
+        ASAM.C.SCALAR.SWORD.RAT_FUNC_DIV_81_9175
+        ASAM.C.SCALAR.SWORD.TAB_INTP_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_INTP_NO_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_NOINTP_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_NOINTP_NO_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_VERB_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_VERB_NO_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.VTAB_RANGE_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.VTAB_RANGE_NO_DEFAULT_VALUE
+        ASAM.C.SCALAR.UBYTE.IDENTICAL
+        ASAM.C.SCALAR.ULONG.IDENTICAL
+        ASAM.C.SCALAR.UWORD.IDENTICAL
+        ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0001
+        ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0010
+        ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0FF0
+      </DEF_CHARACTERISTIC>
+    </FUNCTION>
+
+    <FUNCTION property="FunctionDependentParameters &quot;&quot;">
+      <REF_CHARACTERISTIC>
+        ASAM.C.SCALAR.UBYTE.IDENTICAL
+        ASAM.C.SCALAR.SBYTE.IDENTICAL
+      </REF_CHARACTERISTIC>
+      <DEF_CHARACTERISTIC>
+        ASAM.C.DEPENDENT.REF_1.SWORD
+        ASAM.C.DEPENDENT.REF_2.UWORD
+        ASAM.C.DEPENDENT.REF_3.SWORD
+      </DEF_CHARACTERISTIC>
+    </FUNCTION>
+
+    <FUNCTION property="FunctionCurveAxis &quot;&quot;">
+      <DEF_CHARACTERISTIC>
+        ASAM.C.CURVE_AXIS
+        ASAM.C.CURVE.CURVE_AXIS
+      </DEF_CHARACTERISTIC>
+      <IN_MEASUREMENT>
+        ASAM.M.SCALAR.SBYTE.IDENTICAL
+      </IN_MEASUREMENT>
+    </FUNCTION>
+
+    <FUNCTION property="FunctionVirtualMeasurements &quot;&quot;">
+      <IN_MEASUREMENT>
+        ASAM.M.SCALAR.SBYTE.LINEAR_MUL_2
+      </IN_MEASUREMENT>
+      <OUT_MEASUREMENT>
+        ASAM.M.VIRTUAL.SCALAR.SWORD.PHYSICAL
+      </OUT_MEASUREMENT>
+    </FUNCTION>
+
+
+/*  ==============================================================================================  */
+/*                                                                                                  */
+/*  Groups                                                                                          */
+/*                                                                                                  */
+/*  Note:                                                                                           */
+/*  For GROUP there is no special sorting defined                                                   */
+/*  It is up to the user to define one ore more sortings                                            */
+/*                                                                                                  */
+/*  ==============================================================================================  */
+
+    <GROUP property="Group_Type_All &quot;contains all groups with special types&quot;">
+      ROOT
+      <SUB_GROUP>
+        Group_Type_Scalar
+        Group_Type_Array
+        Group_Type_Curve
+        Group_Type_Map
+        Group_Type_Cuboid
+        Group_Type_ASCII
+      </SUB_GROUP>
+    </GROUP>
+
+    <GROUP property="Group_Type_Scalar &quot;Contains all scalar measurements and parameters&quot;">
+      <REF_CHARACTERISTIC>
+        ASAM.C.SCALAR.FLOAT32_IEEE.IDENTICAL
+        ASAM.C.SCALAR.FLOAT64_IEEE.IDENTICAL
+        ASAM.C.SCALAR.SBYTE.IDENTICAL
+        ASAM.C.SCALAR.SLONG.IDENTICAL
+        ASAM.C.SCALAR.SWORD.FORM_X_PLUS_4
+        ASAM.C.SCALAR.SWORD.IDENTICAL
+        ASAM.C.SCALAR.SWORD.LINEAR_MUL_2
+        ASAM.C.SCALAR.SWORD.RAT_FUNC_DIV_10
+        ASAM.C.SCALAR.SWORD.RAT_FUNC_DIV_81_9175
+        ASAM.C.SCALAR.SWORD.TAB_INTP_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_INTP_NO_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_NOINTP_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_NOINTP_NO_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_VERB_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_VERB_NO_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.VTAB_RANGE_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.VTAB_RANGE_NO_DEFAULT_VALUE
+        ASAM.C.SCALAR.UBYTE.IDENTICAL
+        ASAM.C.SCALAR.ULONG.IDENTICAL
+        ASAM.C.SCALAR.UWORD.IDENTICAL
+        ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0001
+        ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0010
+        ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0FF0
+      </REF_CHARACTERISTIC>
+      <REF_MEASUREMENT>
+        ASAM.M.SCALAR.FLOAT32.IDENTICAL
+        ASAM.M.SCALAR.FLOAT64.IDENTICAL
+        ASAM.M.SCALAR.SBYTE.IDENTICAL
+        ASAM.M.SCALAR.SBYTE.LINEAR_MUL_2
+        ASAM.M.SCALAR.SLONG.IDENTICAL
+        ASAM.M.SCALAR.SWORD.IDENTICAL
+        ASAM.M.SCALAR.UBYTE.FORM_X_PLUS_4
+        ASAM.M.SCALAR.UBYTE.IDENTICAL
+        ASAM.M.SCALAR.UBYTE.TAB_INTP_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.TAB_INTP_NO_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.TAB_NOINTP_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.TAB_NOINTP_NO_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.TAB_VERB_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.TAB_VERB_NO_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.VTAB_RANGE_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.VTAB_RANGE_NO_DEFAULT_VALUE
+        ASAM.M.SCALAR.ULONG.IDENTICAL
+        ASAM.M.SCALAR.UWORD.IDENTICAL
+        ASAM.M.SCALAR.UWORD.IDENTICAL.BITMASK_0008
+        ASAM.M.SCALAR.UWORD.IDENTICAL.BITMASK_0FF0
+        ASAM.M.VIRTUAL.SCALAR.SWORD.PHYSICAL
+      </REF_MEASUREMENT>
+    </GROUP>
+
+    <GROUP property="Group_Type_Array &quot;Contains all array measurements and parameters&quot;">
+      <REF_CHARACTERISTIC>
+        ASAM.C.ARRAY.SWORD.MATRIX_DIM_3_4.COLUMN_DIR
+        ASAM.C.ARRAY.SWORD.MATRIX_DIM_3_4.ROW_DIR
+        ASAM.C.ARRAY.SWORD.MATRIX_DIM_6.ROW_DIR
+      </REF_CHARACTERISTIC>
+      <REF_MEASUREMENT>
+        ASAM.M.ARRAY_SIZE_16.UBYTE.IDENTICAL
+        ASAM.M.MATRIX_DIM_16_1_1.UBYTE.IDENTICAL
+        ASAM.M.MATRIX_DIM_8_2_1.UBYTE.IDENTICAL
+      </REF_MEASUREMENT>
+    </GROUP>
+
+    <GROUP property="Group_Type_Curve &quot;Contains all curve parameters&quot;">
+      <REF_CHARACTERISTIC>
+        ASAM.C.CURVE.COM_AXIS
+        ASAM.C.CURVE.CURVE_AXIS
+        ASAM.C.CURVE.FIX_AXIS.PAR
+        ASAM.C.CURVE.FIX_AXIS.PAR_DIST
+        ASAM.C.CURVE.FIX_AXIS.PAR_LIST
+        ASAM.C.CURVE.RES_AXIS
+        ASAM.C.CURVE.STD_AXIS
+        ASAM.C.CURVE.STD_AXIS.MONOTONY_STRICT_DECREASE
+        ASAM.C.CURVE.STD_AXIS.MONOTONY_STRICT_INCREASE
+        ASAM.C.CURVE_AXIS
+        ASAM.C.AXIS_PTS.RESCALE
+        ASAM.C.AXIS_PTS.UBYTE_8
+      </REF_CHARACTERISTIC>
+    </GROUP>
+
+    <GROUP property="Group_Type_Map &quot;Contains all map parameters&quot;">
+      <REF_CHARACTERISTIC>
+        ASAM.C.MAP.COM_AXIS.FIX_AXIS
+        ASAM.C.MAP.STD_AXIS.STD_AXIS
+      </REF_CHARACTERISTIC>
+    </GROUP>
+
+    <GROUP property="Group_Type_Cuboid &quot;Contains all cuboid parameters&quot;">
+      <REF_CHARACTERISTIC>
+        ASAM.C.CUBOID.COM_AXIS.FIX_AXIS.STD_AXIS
+      </REF_CHARACTERISTIC>
+    </GROUP>
+
+    <GROUP property="Group_Type_ASCII &quot;Contains all ASCII parameters&quot;">
+      <REF_CHARACTERISTIC>
+        ASAM.C.ASCII.UBYTE.NUMBER_42
+      </REF_CHARACTERISTIC>
+    </GROUP>
+
+
+    <GROUP property="Group_Function_All &quot;contains all groups with special functions&quot;">
+      ROOT
+      <SUB_GROUP>
+        Group_Function_Virtual 
+        Group_Function_Monotony
+        Group_Function_Computation
+        Group_Function_Bitmask
+      </SUB_GROUP>
+    </GROUP>
+
+    <GROUP property="Group_Function_Virtual &quot;Contains all functions, measurements and parameters used for virtual&quot;">
+      <FUNCTION_LIST>
+        FunctionVirtualMeasurements
+      </FUNCTION_LIST>
+      <REF_CHARACTERISTIC>
+        ASAM.C.SCALAR.SBYTE.IDENTICAL 
+        ASAM.C.SCALAR.UBYTE.IDENTICAL 
+        ASAM.C.VIRTUAL.ASCII
+        ASAM.C.VIRTUAL.REF_1.SWORD
+        ASAM.C.VIRTUAL.REF_2.UWORD
+        ASAM.C.VIRTUAL.REF_3.SWORD
+        ASAM.C.VIRTUAL.SYSTEM_CONSTANT_1
+      </REF_CHARACTERISTIC>
+      <REF_MEASUREMENT>
+        ASAM.M.SCALAR.SBYTE.LINEAR_MUL_2
+        ASAM.M.VIRTUAL.SCALAR.SWORD.PHYSICAL
+      </REF_MEASUREMENT>
+    </GROUP>
+
+    <GROUP property="Group_Function_Monotony &quot;Contains all functions, measurements and parameters used for monotony&quot;">
+      <REF_CHARACTERISTIC>
+      </REF_CHARACTERISTIC>
+      <REF_MEASUREMENT>
+      </REF_MEASUREMENT>
+    </GROUP>
+
+    <GROUP property="Group_Function_Computation &quot;Contains all measurements and parameters that have a computation method different to identical&quot;">
+      <REF_CHARACTERISTIC>
+        ASAM.C.SCALAR.SWORD.FORM_X_PLUS_4
+        ASAM.C.SCALAR.SWORD.LINEAR_MUL_2
+        ASAM.C.SCALAR.SWORD.RAT_FUNC_DIV_10
+        ASAM.C.SCALAR.SWORD.RAT_FUNC_DIV_81_9175
+        ASAM.C.SCALAR.SWORD.TAB_INTP_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_INTP_NO_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_NOINTP_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_NOINTP_NO_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_VERB_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.TAB_VERB_NO_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.VTAB_RANGE_DEFAULT_VALUE
+        ASAM.C.SCALAR.SWORD.VTAB_RANGE_NO_DEFAULT_VALUE
+        ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0001
+        ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0010
+        ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0FF0
+      </REF_CHARACTERISTIC>
+      <REF_MEASUREMENT>
+        ASAM.M.SCALAR.SBYTE.LINEAR_MUL_2
+        ASAM.M.SCALAR.UBYTE.FORM_X_PLUS_4
+        ASAM.M.SCALAR.UBYTE.TAB_INTP_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.TAB_INTP_NO_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.TAB_NOINTP_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.TAB_NOINTP_NO_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.TAB_VERB_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.TAB_VERB_NO_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.VTAB_RANGE_DEFAULT_VALUE
+        ASAM.M.SCALAR.UBYTE.VTAB_RANGE_NO_DEFAULT_VALUE
+      </REF_MEASUREMENT>
+    </GROUP>
+
+    <GROUP property="Group_Function_Bitmask &quot;Contains all measurements and parameters that have a bitmask&quot;">
+      <REF_CHARACTERISTIC>
+        ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0001
+        ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0010
+        ASAM.C.SCALAR.UWORD.IDENTICAL.BITMASK_0FF0
+      </REF_CHARACTERISTIC>
+      <REF_MEASUREMENT>
+        ASAM.M.SCALAR.UWORD.IDENTICAL.BITMASK_0008
+        ASAM.M.SCALAR.UWORD.IDENTICAL.BITMASK_0FF0
+      </REF_MEASUREMENT>
+    </GROUP>
+
+
+  </MODULE>
+</PROJECT>
